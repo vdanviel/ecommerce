@@ -6,6 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'personal-class\\' => array($vendorDir . '/personal-class/classes/src'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
+    'PERSONAL\\' => array($vendorDir . '/PERSONAL/classes/src'),
 );

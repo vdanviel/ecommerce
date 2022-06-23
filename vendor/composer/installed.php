@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
-        'name' => 'vdanviel/ecommerce',
+        'reference' => '88199cdebf6ef6ea73411c04e915f2602f8c3d95',
+        'name' => 'vdanviel/phpecommerce',
         'dev' => true,
     ),
     'versions' => array(
         'phpmailer/phpmailer' => array(
-            'pretty_version' => 'v6.6.2',
-            'version' => '6.6.2.0',
+            'pretty_version' => 'v6.6.3',
+            'version' => '6.6.3.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpmailer/phpmailer',
             'aliases' => array(),
-            'reference' => 'b52ed06864fdda81b82ec8bf564cf15d45ed4f95',
+            'reference' => '9400f305a898f194caff5521f64e5dfa926626f3',
             'dev_requirement' => false,
         ),
         'slim/slim' => array(
@@ -28,13 +28,13 @@
             'reference' => '3e95c9abbc57a8f023ab4dacebcab9dae4d9f1f0',
             'dev_requirement' => false,
         ),
-        'vdanviel/ecommerce' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+        'vdanviel/phpecommerce' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => '88199cdebf6ef6ea73411c04e915f2602f8c3d95',
             'dev_requirement' => false,
         ),
     ),

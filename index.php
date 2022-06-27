@@ -2,17 +2,27 @@
 
 require_once("vendor/autoload.php");
 
-$app = new \Slim\Slim();
+use \Slim\Slim;
 
-$app->config('debug', true);
+$app = new Slim();
 
-$app->get('/', function() {
+//$app->config('debug', true);
+
+$app->get('/a', function() {
     
-	$db = new PERSONAL\DB\DBconnect();
+	require_once("vendor/PERSONAL/template/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/index.php");
+	require_once("vendor/PERSONAL/template/header-footer/footer.php");
 
-	$result = $db->select("SELECT * FROM tb_users");
+});
 
-	echo json_encode($result);
+$app->get('/listaproduto', function() {
+    
+	require_once("vendor/PERSONAL/template/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/lista-produtos.php");
+	require_once("vendor/PERSONAL/template/header-footer/footer.php");
+
+	echo "okay.";
 
 });
 

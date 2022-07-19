@@ -1,3 +1,4 @@
+<?php require_once("vendor/autoload.php"); use \PERSONAL\TEMPLATE\Visual;?>
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -13,15 +14,15 @@
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
     
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="./vendor/PERSONAL/template/client-site/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/css/bootstrap.min.css">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="./vendor/PERSONAL/template/client-site/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/css/font-awesome.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="./vendor/PERSONAL/template/client-site/css/owl.carousel.css">
-    <link rel="stylesheet" href="./vendor/PERSONAL/template/client-site/css/style.css">
-    <link rel="stylesheet" href="./vendor/PERSONAL/template/client-site/css/responsive.css">
+    <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/css/owl.carousel.css">
+    <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/css/style.css">
+    <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/css/responsive.css">
     
   </head>
   <body>
@@ -71,13 +72,13 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="#"><img src="./vendor/PERSONAL/template/client-site/img/logo.png"></a></h1>
+                        <h1><a href="#"><img src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/img/logo.png"></a></h1>
                     </div>
                 </div>
                 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="./vendor/PERSONAL/template/client-site/carrinho.html">Carrinho - <span class="cart-amunt">R$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/carrinho.html">Carrinho - <span class="cart-amunt">R$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
                     </div>
                 </div>
             </div>

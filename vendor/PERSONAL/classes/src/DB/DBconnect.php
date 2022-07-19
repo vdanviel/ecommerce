@@ -41,8 +41,15 @@ class DBconnect{
         return $stmt;
     }
 
-    #comando e retorna algo
+    #comando e retorna algo (esse usa fetchAll)
     public function select($rawQuery,$params = array()):array
+    {
+        $stmt = $this->queryCommand($rawQuery, $params);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    #(esse usa somente fetch)
+    public function selectonlyfetch($rawQuery,$params = array())
     {
         $stmt = $this->queryCommand($rawQuery, $params);
 

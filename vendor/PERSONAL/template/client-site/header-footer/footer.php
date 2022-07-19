@@ -1,3 +1,4 @@
+<?php require_once("vendor/autoload.php"); use \PERSONAL\TEMPLATE\Visual;?>
 <div class="footer-top-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -82,18 +83,18 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     
     <!-- jQuery sticky menu -->
-    <script src="./vendor/PERSONAL/template/client-site/js/owl.carousel.min.js"></script>
-    <script src="./vendor/PERSONAL/template/client-site/js/jquery.sticky.js"></script>
+    <script src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/js/owl.carousel.min.js"></script>
+    <script src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/js/jquery.sticky.js"></script>
     
     <!-- jQuery easing -->
-    <script src="./vendor/PERSONAL/template/client-site/js/jquery.easing.1.3.min.js"></script>
+    <script src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/js/jquery.easing.1.3.min.js"></script>
     
     <!-- Main Script -->
-    <script src="./vendor/PERSONAL/template/client-site/js/main.js"></script>
+    <script src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/js/main.js"></script>
     
     <!-- Slider -->
-    <script type="text/javascript" src="./vendor/PERSONAL/template/client-site/js/bxslider.min.js"></script>
-	<script type="text/javascript" src="./vendor/PERSONAL/template/client-site/js/script.slider.js"></script>
+    <script type="text/javascript" src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/js/bxslider.min.js"></script>
+	<script type="text/javascript" src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/js/script.slider.js"></script>
 
     </body>
 </html>

@@ -48,13 +48,6 @@ class DBconnect{
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
-    #(esse usa somente fetch)
-    public function selectonlyfetch($rawQuery,$params = array())
-    {
-        $stmt = $this->queryCommand($rawQuery, $params);
-
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    }
 }
 
 ?>

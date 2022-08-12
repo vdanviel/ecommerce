@@ -108,16 +108,54 @@ $app->post('/admin/users/create', function () {
 
 	User::verifylogin();
 
-	var_dump($_POST);
-
 	$user = new User();
 
-	$user->setdata($_POST);
+	try {
+		$_POST['inadmin'] = (isset($_POST['inadmin']) ? '1' : '0');
+		$user->setdata($_POST);
+		$user->registeruser();
+
+		$statusR = "SUCCESS";
+	} catch (\Throwable $e) {
+		$statusR = "ERROR: ".$e->getMessage();
+	}
+	
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/adm-site/users.php");
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
 });
 
-$app->get('/admin/users/:id/delete', function ($id) {
+$app->get('/admin/users/:id/delete', function () {
 
 	User::verifylogin();
+
+	require_once("vendor/PERSONAL/template/adm-site/deletesure.php");
+
+});
+
+$app->post('/admin/users/:id/delete', function($id){
+	$user = new User;
+
+	if (isset($_POST['confirm'])) {
+		
+		try {
+			$user->deleteuser($id);
+			
+			$statusD = "SUCCESS";
+		} catch (\Throwable $e) {
+			$statusD = "ERROR: ".$e->getMessage();
+		}
+
+	}
+
+	if (isset($_POST['cancel'])) {
+		header('location: http://localhost/ecommerce/admin/users');
+		exit;
+	}
+
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/adm-site/users.php");
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
 });
 
 $app->get('/admin/users/:id', function ($id) {
@@ -133,7 +171,24 @@ $app->post('/admin/users/:id', function ($id) {
 
 	User::verifylogin();
 
+	$user = new User();
 
+	$dbuser = User::findoneuser($id);
+
+	try {
+		$_POST['despassword'] = $dbuser[0]['despassword'];
+		$_POST['inadmin'] = (isset($_POST['inadmin']) ? '1' : '0');
+		$user->setdata($_POST);
+		$user->edituser();
+
+		$statusE = "SUCCESS";
+	} catch (\Throwable $e) {
+		$statusE = "ERROR: ".$e->getMessage();
+	}
+
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/adm-site/users.php");
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
 });
 
 $app->run();

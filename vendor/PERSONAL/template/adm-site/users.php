@@ -4,8 +4,51 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Usuários
+    Edite um Usuário
   </h1>
+  <?php
+    if (isset($statusR)) {
+      if ($statusR == "SUCCESS") {
+        echo "<div class='alert alert-success container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
+        echo "Usuário cadastrado com sucesso.";
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "</div>";
+      }else{
+        echo "<div class='alert alert-danger container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
+        echo "Falha ao cadastrar usuário.";
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "</div>";
+      }
+    }
+    
+    if (isset($statusE)) {
+      if ($statusE == "SUCCESS") {
+        echo "<div class='alert alert-success container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
+        echo "Usuário editado com sucesso.";
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "</div>";
+      }else{
+        echo "<div class='alert alert-danger container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
+        echo "Falha ao editar usuário.";
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "</div>";
+      }
+    }
+
+    if (isset($statusD)) {
+      if ($statusD == "SUCCESS") {
+        echo "<div class='alert alert-success container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
+        echo "Usuário excluído com sucesso.";
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "</div>";
+      }else{
+        echo "<div class='alert alert-danger container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
+        echo $statusD;
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "</div>";
+      }
+    }
+  ?>
   <ol class="breadcrumb">
     <li><a href="http://localhost/ecommerce/admin"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active"><a href=http://localhost/ecommerce/admin/users">Usuários</a></li>
@@ -52,7 +95,6 @@
                       echo "<td><input class='form-check-input' type='checkbox' value='' id='$inadminid' $inadmindisplay disabled></td>";
                       echo "<td><a href='http://localhost/ecommerce/admin/users/{$data[$key]['iduser']}' class='btn btn-white'><i class='fa fa-pencil'></i></a></td>";
                       echo "</tr>";
-                      //var_dump($adminoruser);
                     }
                   ?>
                 </tbody>

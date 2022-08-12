@@ -1,10 +1,8 @@
 <?php 
   require_once('./vendor/autoload.php');
   use \PERSONAL\USER\User;
-
-  $word = "users/";
-  $iduri = substr($_SERVER['REQUEST_URI'],strpos($_SERVER['REQUEST_URI'],$word) + strlen($word),strlen($_SERVER['REQUEST_URI']));
-  $dbdisplayuser = User::findoneuser($iduri);
+  $user = new User();
+	$dbdisplayuser = User::findoneuser($user->geteditiduser());
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -45,6 +43,9 @@
               <label>
                 <input type="checkbox" name="inadmin" value="1" <?=$dbdisplayuser[0]['inadmin'] === 1 ? "checked" :""?>> Acesso de Administrador
               </label>
+            </div>
+            <div>
+              <a class="btn btn-danger" href="http://localhost/ecommerce/admin/users/<?=$user->geteditiduser()?>/delete"><i class="fa fa-trash"></i> Deletar Usuário</a>
             </div>
           </div>
           <!-- /.box-body -->

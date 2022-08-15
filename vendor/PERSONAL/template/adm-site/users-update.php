@@ -45,7 +45,7 @@
               </label>
             </div>
             <div>
-              <a class="btn btn-danger" href="http://localhost/ecommerce/admin/users/<?=$user->geteditiduser()?>/delete"><i class="fa fa-trash"></i> Deletar Usuário</a>
+              <a class="btn btn-danger" href="http://localhost/ecommerce/admin/users/<?=$user->geteditiduser()?>/delete" onclick="return confirm('Deseja realmente excluir este usuário?')"><i class="fa fa-trash"></i> Deletar Usuário</a>
             </div>
           </div>
           <!-- /.box-body -->

@@ -125,40 +125,26 @@ $app->post('/admin/users/create', function () {
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
 });
 
-$app->get('/admin/users/:id/delete', function () {
-
+$app->get('/admin/users/:id/delete', function ($id) {
 	User::verifylogin();
 
-	require_once("vendor/PERSONAL/template/adm-site/deletesure.php");
-
-});
-
-$app->post('/admin/users/:id/delete', function($id){
 	$user = new User;
-
-	if (isset($_POST['confirm'])) {
 		
-		try {
-			$user->deleteuser($id);
-			
-			$statusD = "SUCCESS";
-		} catch (\Throwable $e) {
-			$statusD = "ERROR: ".$e->getMessage();
-		}
-
-	}
-
-	if (isset($_POST['cancel'])) {
-		header('location: http://localhost/ecommerce/admin/users');
-		exit;
+	try {
+		$user->deleteuser($id);
+		
+		$statusD = "SUCCESS";
+	} catch (\Throwable $e) {
+		$statusD = "ERROR: ".$e->getMessage();
 	}
 
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/adm-site/users.php");
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+
 });
 
-$app->get('/admin/users/:id', function ($id) {
+$app->get('/admin/users/:id', function () {
 
 	User::verifylogin();
 

@@ -60,7 +60,7 @@
       </div>
     </form>
 
-    <a href="#">I forgot my password</a><br>
+    <a href="http://localhost/ecommerce/admin/forgot">I forgot my password</a><br>
     <a href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/pages/examples/register.html" class="text-center">Register a new membership</a>
 
   </div>

@@ -4,6 +4,8 @@ require_once("vendor/autoload.php");
 
 use \Slim\Slim;
 use \PERSONAL\USER\User;
+use \PERSONAL\DB\DBconnect;
+use \PERSONAL\Mailer;
 
 $app = new Slim();
 
@@ -65,7 +67,6 @@ $app->get('/admin', function () {
 
 #login-functions/logout
 $app->get('/admin/login', function () {
-
 	require_once("vendor/PERSONAL/template/adm-site/login.php");
 });
 
@@ -74,8 +75,35 @@ $app->post('/admin/login', function () {
 	$email = $_POST['email'];
 	$password = $_POST['password'];
 
+	var_dump($_POST);
+
 	User::login($email, $password);
 	header("location: http://localhost/ecommerce/admin");
+	exit;
+});
+
+$app->get('/admin/forgot', function(){
+
+	require_once("vendor/PERSONAL/template/adm-site/forgot1.php");
+
+});
+
+$app->post('/admin/forgot', function(){
+	User::emailrecovery($_POST["email"]);
+
+	header('location: http://localhost/ecommerce/admin/forgot/sent');
+	exit;
+});
+
+$app->get('/admin/forgot/sent', function(){
+
+	require_once("vendor/PERSONAL/template/adm-site/forgot-sent.php");
+
+});
+
+$app->get('/admin/logout', function () {
+
+	User::logout();
 	exit;
 });
 
@@ -112,6 +140,7 @@ $app->post('/admin/users/create', function () {
 
 	try {
 		$_POST['inadmin'] = (isset($_POST['inadmin']) ? '1' : '0');
+		$_POST['despassword'] = password_hash($_POST["despassword"], PASSWORD_DEFAULT);
 		$user->setdata($_POST);
 		$user->registeruser();
 

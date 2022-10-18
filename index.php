@@ -4,8 +4,6 @@ require_once("vendor/autoload.php");
 
 use \Slim\Slim;
 use \PERSONAL\USER\User;
-use \PERSONAL\DB\DBconnect;
-use \PERSONAL\Mailer;
 
 $app = new Slim();
 
@@ -93,6 +91,26 @@ $app->post('/admin/forgot', function(){
 
 	header('location: http://localhost/ecommerce/admin/forgot/sent');
 	exit;
+});
+
+$app->get('/admin/forgot/reset', function(){
+
+	$user = User::userdecryptforgot($_GET["code"]);
+
+	require_once("vendor/PERSONAL/template/adm-site/forgot-reset.php");
+
+});
+
+$app->post('/admin/forgot/reset', function(){
+
+	$user = User::userdecryptforgot($_GET["code"]);
+
+	User::setforgotuser($user["idrecovery"]);
+
+	User::changepassword($_POST["password"],$user["iduser"]);
+
+	require_once("vendor/PERSONAL/template/adm-site/forgot-reset-success.php");
+
 });
 
 $app->get('/admin/forgot/sent', function(){

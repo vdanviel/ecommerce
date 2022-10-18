@@ -25,7 +25,7 @@ class User extends Model
         $db = new DBconnect();
 
         $resultlogin = $db->select("SELECT * FROM tb_persons WHERE desemail = :EMAIL", array(
-            ":EMAIL" => $email,
+            ":EMAIL" => $email
         ));
 
         if (count($resultlogin) == 0) {
@@ -204,10 +204,50 @@ class User extends Model
 
     }
 
+    public static function  userdecryptforgot($code){
+        
+        $idrecovery = openssl_decrypt(base64_decode($code), 'AES-128-CBC', pack("a16", "Stufesp2051"), 0, pack ("a16", "EcommerceStufeSp"));
+
+        #buscar o id desenciptado
+        $db = new DBconnect();
+
+        $result = $db->select("SELECT * FROM tb_userspasswordsrecoveries a INNER JOIN tb_users b USING(iduser) INNER JOIN tb_persons c USING(idperson) WHERE a.idrecovery = :idrecovery AND a.dtrecovery IS NULL AND DATE_ADD(a.dtregister, INTERVAL 1 HOUR) >= NOW();",array(
+           ":idrecovery" => $idrecovery
+        ));
+
+        if (count($result) == 0) {
+            throw new \Exception("Não foi possível recuperar a senha.");
+        }else {
+            return $result[0];
+        }
+
+    }
+
+    public static function setforgotuser($idrecovery){
+
+        $db = new DBconnect();
+
+        $db->queryCommand("UPDATE tb_userspasswordsrecoveries SET dtrecovery = NOW() WHERE idrecovery = :idrecovery",array(
+            ":idrecovery" => $idrecovery
+        ));
+
+    }
+
+    public static function changepassword($password, $id){
+
+        $db = new DBconnect();
+
+         $db->queryCommand("UPDATE tb_users SET despassword = :password WHERE iduser = :iduser",array(
+            ":password" => password_hash($password, PASSWORD_DEFAULT),
+            ":iduser" => $id
+        ));
+
+    }
+
     public static function logout(){
 
         $_SESSION[User::SESSION] = NULL;
-        header("location: http://localhost/ecommerce");
+        header("location: http://localhost/ecommerce/admin/login");
     }
 
     public static function listdata(){

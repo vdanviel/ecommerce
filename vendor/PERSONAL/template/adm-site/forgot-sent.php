@@ -27,7 +27,7 @@
 <!-- Automatic element centering -->
 <div class="lockscreen-wrapper">
   <div class="lockscreen-logo">
-    <a href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/index2.html"><b>Admin</b>LTE</a>
+    <a href="http://localhost/ecommerce/admin"><b>Admin</b>LTE</a>
   </div>
 
   <!-- /.lockscreen-item -->

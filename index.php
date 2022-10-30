@@ -2,6 +2,7 @@
 session_start();
 require_once("vendor/autoload.php");
 
+use PERSONAL\Category;
 use \Slim\Slim;
 use \PERSONAL\USER\User;
 
@@ -82,7 +83,7 @@ $app->post('/admin/login', function () {
 
 $app->get('/admin/forgot', function(){
 
-	require_once("vendor/PERSONAL/template/adm-site/forgot1.php");
+	require_once("vendor/PERSONAL/template/adm-site/forgot-insert.php");
 
 });
 
@@ -221,6 +222,17 @@ $app->post('/admin/users/:id', function ($id) {
 
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/adm-site/users.php");
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->get('/admin/categories', function(){
+
+	User::verifylogin();
+
+	 Category::listdata();
+
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/adm-site/categories.php");
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
 });
 

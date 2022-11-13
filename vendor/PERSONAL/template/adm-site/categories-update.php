@@ -18,15 +18,18 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" action="/admin/categories/{$category.idcategory}" method="post">
+        <form role="form" method="post">
           <div class="box-body">
             <div class="form-group">
               <label for="descategory">Nome da categoria</label>
-              <input type="text" class="form-control" id="descategory" name="descategory" placeholder="Digite o nome da categoria" value="{$category.descategory}">
+              <input type="text" class="form-control" id="descategory" name="descategory" placeholder="Digite o nome da categoria" value="<?=$data[0]["descategory"]?>">
             </div>
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
+          <div style="margin-bottom:10px;">
+              <a class="btn btn-danger" href="http://localhost/ecommerce/admin/categories/<?=$data[0]['idcategory']?>/delete" onclick="return confirm('Deseja realmente excluir esta categoria?')"><i class="fa fa-trash"></i> Deletar Categoria</a>
+          </div>
             <button type="submit" class="btn btn-primary">Salvar</button>
           </div>
         </form>

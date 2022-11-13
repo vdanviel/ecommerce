@@ -23,11 +23,11 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition lockscreen">
+<body style="background: #14427a" class="hold-transition lockscreen">
 <!-- Automatic element centering -->
 <div class="lockscreen-wrapper">
   <div class="lockscreen-logo">
-    <a href="http://localhost/ecommerce/admin"><b>Admin</b>LTE</a>
+      <a href="http://localhost/ecommerce/admin"><img height="40px" src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/img/general/logo-stufeshop.png" alt="logo"></a>
   </div>
 
   <!-- /.lockscreen-item -->
@@ -37,7 +37,7 @@
       <p>Tente fazer o login com sua nova senha.<br><a href="http://localhost/ecommerce/admin/login">Clique aqui</a> para fazer o login.</p>
     </div>
   </div>
-  <div class="lockscreen-footer text-center">
+  <div style="color: black" class="lockscreen-footer text-center">
     Copyright &copy; 2014-2016 <b><a href="http://almsaeedstudio.com" class="text-black">Almsaeed Studio</a></b><br>
     All rights reserved
   </div>

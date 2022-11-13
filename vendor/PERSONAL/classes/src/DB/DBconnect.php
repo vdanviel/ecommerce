@@ -20,6 +20,10 @@ class DBconnect{
 
     }
 
+    public function getconnection(){
+        return $this->conn;
+    }
+
     #parametros
     private function setParams($statment,$parameters = array()){
 
@@ -42,7 +46,7 @@ class DBconnect{
     }
 
     #comando e retorna algo (esse usa fetchAll)
-    public function select($rawQuery,$params = array()):array
+    public function select($rawQuery,$params = array())
     {
         $stmt = $this->queryCommand($rawQuery, $params);
 

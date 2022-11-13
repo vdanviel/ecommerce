@@ -19,12 +19,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/css/AdminLTE.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect.
   -->
-  <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/css/skins/skin-blue.css">
   
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -261,7 +261,7 @@ desired effect
           <li class="header">HEADER</li>
           <!-- Optionally, you can add icons to the links -->
           <li class="active"><a href="http://localhost/ecommerce/admin/users"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
-          <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+          <li class="active"><a href="http://localhost/ecommerce/admin/categories"><i class="fa fa-bookmark"></i> <span>Categorias</span></a></li>
           <li class="treeview">
             <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
               <span class="pull-right-container">

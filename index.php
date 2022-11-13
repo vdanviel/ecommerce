@@ -26,6 +26,15 @@ $app->get('/lista-produtos', function () {
 	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
 });
 
+$app->get('/category/:id', function($id){
+
+    $data = Category::findonecategory($id);
+
+    require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+    require_once("vendor/PERSONAL/template/client-site/category.php");
+    require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+});
+
 $app->get('/carrinho', function () {
 
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
@@ -192,9 +201,11 @@ $app->get('/admin/users/:id/delete', function ($id) {
 
 });
 
-$app->get('/admin/users/:id', function () {
+$app->get('/admin/users/:id', function ($id) {
 
 	User::verifylogin();
+
+	$data = User::findoneuser($id);
 
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/adm-site/users-update.php");
@@ -207,10 +218,10 @@ $app->post('/admin/users/:id', function ($id) {
 
 	$user = new User();
 
-	$dbuser = User::findoneuser($id);
+	$data = User::findoneuser($id);
 
 	try {
-		$_POST['despassword'] = $dbuser[0]['despassword'];
+		$_POST['despassword'] = $data[0]['despassword'];
 		$_POST['inadmin'] = (isset($_POST['inadmin']) ? '1' : '0');
 		$user->setdata($_POST);
 		$user->edituser();
@@ -229,7 +240,87 @@ $app->get('/admin/categories', function(){
 
 	User::verifylogin();
 
-	 Category::listdata();
+	Category::listdata();
+
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/adm-site/categories.php");
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->get('/admin/categories/create', function(){
+
+	User::verifylogin();
+
+	Category::listdata();
+
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/adm-site/categories-create.php");
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->post('/admin/categories/create', function(){
+
+	User::verifylogin();
+
+	$category = new Category();
+
+	try {
+
+		$category->setdata($_POST);
+
+		$statusR = $category->registercategory();
+	} catch (\Throwable $e) {
+		$statusR = "ERROR: ".$e->getMessage();
+	}
+
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/adm-site/categories.php");
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->get('/admin/categories/:id', function($id){
+
+	User::verifylogin();
+
+	$data = Category::findonecategory($id);
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/adm-site/categories-update.php");
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->post('/admin/categories/:id', function($id){
+
+	User::verifylogin();
+
+    $category = new Category();
+
+	try {
+        $category->setdata($_POST);
+        $category->editcategory($id);
+
+		$statusE = "SUCCESS";
+	} catch (\Throwable $e) {
+		$statusE = "ERROR: ".$e->getMessage();
+	}
+	
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/adm-site/categories.php");
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->get('/admin/categories/:id/delete', function($id){
+
+	User::verifylogin();
+
+	$category = new Category();
+
+	try {
+		$category->deletecategory($id);
+
+		$statusD = "SUCCESS";
+	} catch (\Throwable $e) {
+		$statusD = "ERROR: ".$e->getMessage();
+	}
 
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/adm-site/categories.php");

@@ -1,4 +1,4 @@
-<?php require_once('./vendor/autoload.php'); use \PERSONAL\USER\User;?>
+<?php require_once('./vendor/autoload.php'); use \PERSONAL\Category;?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
@@ -6,6 +6,49 @@
   <h1>
     Lista de Categorias
   </h1>
+  <?php
+    if (isset($statusR)) {
+      if ($statusR == "SUCCESS") {
+        echo "<div class='alert alert-success container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
+        echo "Categoria cadastrada com sucesso.";
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "</div>";
+      }else{
+        echo "<div class='alert alert-danger container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
+        echo "Falha ao cadastrar categoria.<br>".$statusR;
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "</div>";
+      }
+    }
+    
+    if (isset($statusE)) {
+      if ($statusE == "SUCCESS") {
+        echo "<div class='alert alert-success container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
+        echo "Categoria editada com sucesso.";
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "</div>";
+      }else{
+        echo "<div class='alert alert-danger container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
+        echo "Falha ao editar categoria.<br>".$statusE;
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "</div>";
+      }
+    }
+
+    if (isset($statusD)) {
+      if ($statusD == "SUCCESS") {
+        echo "<div class='alert alert-success container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
+        echo "Categoria excluída com sucesso.";
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "</div>";
+      }else{
+        echo "<div class='alert alert-danger container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
+        echo "Erro ao excluir categoria.<br>".$statusD;
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "</div>";
+      }
+    }
+  ?>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active"><a href="/admin/categories">Categorias</a></li>
@@ -20,7 +63,7 @@
   		<div class="box box-primary">
             
             <div class="box-header">
-              <a href="/admin/categories/create" class="btn btn-success">Cadastrar Categoria</a>
+              <a href="http://localhost/ecommerce/admin/categories/create" class="btn btn-primary">Cadastrar Categoria</a>
             </div>
 
             <div class="box-body no-padding">
@@ -34,20 +77,13 @@
                 </thead>
                 <tbody>
                 <?php             
-                    $data = User::listdata();
+                    $data = Category::listdata();
 
                     foreach($data as $key => $value){
-
-                      $data[$key]["inadmin"] === 1 ? $inadmindisplay = "checked" : $inadmindisplay = "";
-                      $data[$key]["inadmin"] === 1 ? $inadminid = "flexCheckCheckedDisabled" : $inadminid = "flexCheckDisabled";
-
                       echo "<tr>";
-                      echo "<td>".$data[$key]["iduser"]."</td>";
-                      echo "<td>".$data[$key]["desperson"]."</td>";
-                      echo "<td>".$data[$key]["desemail"]."</td>";
-                      echo "<td>".$data[$key]["nrphone"]."</td>";
-                      echo "<td><input class='form-check-input' type='checkbox' value='' id='$inadminid' $inadmindisplay disabled></td>";
-                      echo "<td><a href='http://localhost/ecommerce/admin/users/{$data[$key]['iduser']}' class='btn btn-white'><i class='fa fa-pencil'></i></a></td>";
+                      echo "<td>".$data[$key]["idcategory"]."</td>";
+                      echo "<td>".$data[$key]["descategory"]."</td>";
+                      echo "<td><a href='http://localhost/ecommerce/admin/categories/{$data[$key]['idcategory']}' class='btn btn-white'><i class='fa fa-pencil'></i></a></td>";
                       echo "</tr>";
                     }
                   ?>

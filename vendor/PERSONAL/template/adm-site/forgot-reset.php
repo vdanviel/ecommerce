@@ -14,7 +14,7 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/css/AdminLTE.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,14 +23,14 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition lockscreen">
+<body style="background: #14427a" class="hold-transition lockscreen">
 <!-- Automatic element centering -->
 <div class="lockscreen-wrapper">
   <div class="lockscreen-logo">
-    <a href="http://localhost/ecommerce/admin"><b>Admin</b>LTE</a>
+      <a href="http://localhost/ecommerce/admin"><img height="40px" src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/img/general/logo-stufeshop.png" alt="logo"></a>
   </div>
   
-   <div class="help-block text-center">
+   <div style="color: white" class="help-block text-center">
      Olá <?=$user["desperson"]?>, digite uma nova senha:
     </div>
 
@@ -41,7 +41,7 @@
     <form method="post">
       <input type="hidden" name="code" value="<?=$_GET["code"]?>">
       <div class="input-group">
-        <input type="password" class="form-control" placeholder="Digite a nova senha" name="password">
+        <input type="text" class="form-control" placeholder="Digite a nova senha" name="password">
         <div class="input-group-btn">
           <button type="submit" class="btn"><i class="fa fa-arrow-right text-muted"></i></button>
         </div>
@@ -52,7 +52,7 @@
   </div>
   <!-- /.lockscreen-item -->
   
-  <div class="lockscreen-footer text-center">
+  <div style="color: black" class="lockscreen-footer text-center">
     Copyright &copy; 2014-2016 <b><a href="http://almsaeedstudio.com" class="text-black">Almsaeed Studio</a></b><br>
     All rights reserved
   </div>

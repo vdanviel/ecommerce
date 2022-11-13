@@ -1,4 +1,9 @@
-<?php require_once("vendor/autoload.php"); use \PERSONAL\TEMPLATE\Visual;?>
+<?php require_once("vendor/autoload.php");
+use \PERSONAL\TEMPLATE\Visual;
+use \PERSONAL\Category;
+
+$data = Category::listdata();
+?>
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -100,6 +105,18 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>
                         <li><a href="#">Produtos</a></li>
+                        <li class="dropdown dropdown-small categories">
+                            <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">Categorias</a>
+                            <ul class="dropdown-menu">
+                                <?php
+                                foreach($data as $key => $value){
+                                    echo "<li> <a href='http://localhost/ecommerce/category/".$data[$key]['idcategory']."'>";
+                                    echo $data[$key]['descategory'].'</a>';
+                                    echo "</li>";
+                                }
+                                ?>
+                            </ul>
+                        </li>
                         <li><a href="#">Carrinho</a></li>
                     </ul>
                 </div>  

@@ -6,7 +6,7 @@
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="http://localhost/ecommerce">Stufeshop</a>.</strong> Todos direitos reservados.
+    <strong>Copyright &copy; 2022 <a href="http://localhost/ecommerce">Stufeshop</a>.</strong> Todos direitos reservados.
   </footer>
 
   <!-- Control Sidebar -->

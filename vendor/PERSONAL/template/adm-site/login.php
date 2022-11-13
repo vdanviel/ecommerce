@@ -14,7 +14,8 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/css/skins/skin-blue.css">
+    <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/css/AdminLTE.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/plugins/iCheck/square/blue.css">
 
@@ -25,10 +26,10 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition login-page">
+<body style="background: #14427a" class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/index2.html"><b>Admin</b>LTE</a>
+      <img height="40px" src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/img/general/logo-stufeshop.png" alt="logo">
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -54,13 +55,13 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          <button style="background: #184f92;  " type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
         </div>
         <!-- /.col -->
       </div>
     </form>
 
-    <a href="http://localhost/ecommerce/admin/forgot">I forgot my password</a><br>
+    <a style="color: #185093" href="http://localhost/ecommerce/admin/forgot">I forgot my password</a><br>
 
   </div>
   <!-- /.login-box-body -->

@@ -10,7 +10,7 @@
     if (isset($statusR)) {
       if ($statusR == "SUCCESS") {
         echo "<div class='alert alert-success container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
-        echo "Usuário cadastrado com sucesso. Não atualize a página.";
+        echo "Usuário cadastrado com sucesso.";
         echo "<button class='close' data-dismiss='alert'>&times;</button>";
         echo "</div>";
       }else{
@@ -43,7 +43,8 @@
         echo "</div>";
       }else{
         echo "<div class='alert alert-danger container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
-        echo "Erro ao excluir usuário.";
+        //echo "Erro ao excluir usuário.";
+        echo $statusD;
         echo "<button class='close' data-dismiss='alert'>&times;</button>";
         echo "</div>";
       }

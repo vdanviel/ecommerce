@@ -147,7 +147,11 @@ z-index: 999;}
     padding: 20px;
 }
 
-.mainmenu-area ul.navbar-nav li:hover a, .mainmenu-area ul.navbar-nav li.active a {background: #e67e22; color:#FFF;}
+/*.mainmenu-area ul.navbar-nav li:hover a, .mainmenu-area ul.navbar-nav li.active a {background: #e67e22; color:#FFF;}*/
+.mainmenu-area .nav li a:hover{
+    background: #e67e22; color:#FFF;
+}
+
 .mainmenu-area .nav > li > a:focus {color: #FFF;}
 
 .slider-area { width:80%; position:relative; margin:0 auto; padding:5px;}
@@ -258,7 +262,6 @@ z-index: 999;}
 .block-slider .caption-group .caption{
 
 }
-
 /*----------------------
 [10. Block top seller ]
 ------------------------*/
@@ -336,12 +339,6 @@ z-index: 999;}
   padding-right: 40px;
 }
 
-.promo-area {
-  background:#fbfbfb;
-  color: #fff;
-  padding: 40px 0 40px;
-}
-
 .brands-area {
   border-top:1px solid #e5e5e5;
   border-bottom:1px solid #e5e5e5;
@@ -349,28 +346,12 @@ z-index: 999;}
   padding: 20px 0 20px;
 }
 
-.promo-area .zigzag-bottom, .brands-area .zigzag-bottom{background: #f4f4f4}
-.single-promo {
+.zigzag-bottom, .brands-area .zigzag-bottom{background: #f4f4f4}
+.single-category {
     font-size: 25px;
     font-weight: 200;
     padding: 20px 10px;
     text-align: center;
-}
-.single-promo i {
-  font-size: 50px;
-}
-
-.single-promo:hover {color: #fff;background: #222;}
-.promo1 { background:#e67e22;}
-.promo2 { background:#ffd900;}
-.promo3 { background:#fa8072;}
-.promo4 { background:#4abebd;}
-.section-title {
-  font-family: "Raleway",sans-serif;
-  font-size: 50px;
-  font-weight: 100;
-  margin-bottom: 50px;
-  text-align: center;
 }
 
 

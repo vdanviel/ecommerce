@@ -19,11 +19,11 @@
   	<div class="col-md-12">
   		<div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Novo Categoria</h3>
+          <h3 class="box-title">Novo Categoria (Número Total: 5)</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" action="/admin/categories/create" method="post">
+        <form role="form" method="post">
           <div class="box-body">
             <div class="form-group">
               <label for="descategory">Nome da categoria</label>

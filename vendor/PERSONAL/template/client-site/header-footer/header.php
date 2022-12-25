@@ -11,10 +11,10 @@ $data = Category::listdata();
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hcode Store</title>
+    <title>StufeShop</title>
 
-<!-- Google Fonts -->
-<link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
     
@@ -45,29 +45,6 @@ $data = Category::listdata();
                         </ul>
                     </div>
                 </div>
-                
-                <div class="col-md-4">
-                    <div class="header-right">
-                        <ul class="list-unstyled list-inline">
-                            <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">moeda :</span><span class="value">BRL </span><b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">BRL</a></li>
-                                    <li><a href="#">USD</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">linguagem :</span><span class="value">Português </span><b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Português</a></li>
-                                    <li><a href="#">Inglês</a></li>
-                                    <li><a href="#">Espanhol</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
     </div> <!-- End header area -->
@@ -77,7 +54,8 @@ $data = Category::listdata();
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="#"><img src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/img/logo.png"></a></h1>
+
+                        <h1><a href="#"><img src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/img/logo-stufeshop.png"></a></h1>
                     </div>
                 </div>
                 
@@ -104,7 +82,7 @@ $data = Category::listdata();
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Produtos</a></li>
+                        <li><a href="http://localhost/ecommerce/lista-produtos">Produtos</a></li>
                         <li class="dropdown dropdown-small categories">
                             <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">Categorias</a>
                             <ul class="dropdown-menu">
@@ -119,7 +97,8 @@ $data = Category::listdata();
                         </li>
                         <li><a href="#">Carrinho</a></li>
                     </ul>
-                </div>  
+                </div>
             </div>
         </div>
     </div> <!-- End mainmenu area -->
+  <hr>

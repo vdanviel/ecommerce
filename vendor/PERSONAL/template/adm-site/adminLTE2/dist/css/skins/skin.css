@@ -1,5 +1,5 @@
 /*
- * Skin: Blue
+ * Skin Propieties
  * ----------
  */
 .skin-blue .main-header .navbar {
@@ -59,11 +59,11 @@
 .skin-blue .wrapper,
 .skin-blue .main-sidebar,
 .skin-blue .left-side {
-  background-color: #222d32;
+  background-color: #f8f8f8;
 }
 .skin-blue .user-panel > .info,
 .skin-blue .user-panel > .info > a {
-  color: #fff;
+  color: #181818;
 }
 .skin-blue .sidebar-menu > li.header {
   color: #4b646f;

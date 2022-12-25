@@ -43,8 +43,7 @@
         echo "</div>";
       }else{
         echo "<div class='alert alert-danger container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
-        //echo "Erro ao excluir usuário.";
-        echo $statusD;
+        echo "Erro ao excluir usuário.";
         echo "<button class='close' data-dismiss='alert'>&times;</button>";
         echo "</div>";
       }
@@ -64,7 +63,7 @@
   		<div class="box box-primary">
             
             <div class="box-header">
-              <a href="http://localhost/ecommerce/admin/users/create" class="btn btn-success">Cadastrar Usuário</a>
+              <a href="http://localhost/ecommerce/admin/users/create" class="btn btn-primary">Cadastrar Usuário</a>
             </div>
 
             <div class="box-body no-padding">

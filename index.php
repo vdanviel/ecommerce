@@ -21,6 +21,8 @@ $app->get('/', function () {
 
 $app->get('/lista-produtos', function () {
 
+    $data = \PERSONAL\Product::listdata();
+
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/lista-produtos.php");
 	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
@@ -73,7 +75,7 @@ $app->get('/admin', function () {
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
 });
 
-#login-functions/logout
+#login-functions
 $app->get('/admin/login', function () {
 	require_once("vendor/PERSONAL/template/adm-site/login.php");
 });
@@ -236,6 +238,7 @@ $app->post('/admin/users/:id', function ($id) {
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
 });
 
+#categories
 $app->get('/admin/categories', function(){
 
 	User::verifylogin();
@@ -325,6 +328,62 @@ $app->get('/admin/categories/:id/delete', function($id){
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/adm-site/categories.php");
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+#products
+$app->get('/admin/products', function(){
+    User::verifylogin();
+
+    $data = \PERSONAL\Product::listdata();
+
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+    require_once("vendor/PERSONAL/template/adm-site/products.php");
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->get('/admin/products/create', function(){
+    User::verifylogin();
+
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+    require_once("vendor/PERSONAL/template/adm-site/products-create.php");
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->post('/admin/products/create', function(){
+    User::verifylogin();
+
+	$data = \PERSONAL\Product::listdata();
+
+   	$product = new \PERSONAL\Product();
+
+	if ($_POST['desproduct'] == null ||
+		$_POST['vlprice'] == null ||
+		$_POST['vlwidth'] == null ||
+		$_POST['vlheight'] == null ||
+		$_POST['vllength'] == null ||
+		$_POST['vlweight'] == null ||
+		$_POST['desurl'] == null ||
+		$_FILES['imgproduct'] == null
+		) {
+			echo "<script>alert('Nenhum dos campos podem estar vazio.')</script>";
+			require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+			require_once("vendor/PERSONAL/template/adm-site/products-create.php");
+			require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+			exit;
+	}else{
+			try {
+				$product->setdata($_POST);
+				$product->registerproduct();
+		
+				$statusR = "SUCCESS";
+			} catch (\Throwable $e) {
+				$statusR = "ERROR: ".print_r($e);
+			} 
+	}
+
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+    require_once("vendor/PERSONAL/template/adm-site/products.php");
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
 });
 
 $app->run();

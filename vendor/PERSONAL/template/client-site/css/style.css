@@ -12,11 +12,12 @@
     display: block;
     margin: 0 auto 15px;
 }
-a:focus { outline: 0px solid }
-img {
-    max-width: 100%;
-    height: auto;
+a{
+    color: #184f92;
 }
+a:focus { outline: 0px solid }
+
+
 .fix { overflow: hidden }
 h1,
 h2,
@@ -26,15 +27,18 @@ h5,
 h6 {
     margin: 0 0 15px;
 }
-body { font-family:Arial, Helvetica, sans-serif; }
-
-
-
+body {
+    font-family:Arial, Helvetica, sans-serif;
+    background: #f5f5f5;
+}
 .header-area {
-    background: none repeat scroll 0 0 #f4f4f4;
+    background: none repeat scroll 0 0 #f5f5f5;
 }
 .header-area a {
-    color: #888;
+    color: #181818;
+}
+.site-branding-area{
+    background: #14427a;
 }
 .user-menu ul {
     list-style: outside none none;
@@ -73,16 +77,18 @@ body { font-family:Arial, Helvetica, sans-serif; }
     text-align: center;
 }
 
-.mainmenu-area {background: none repeat scroll 0 0 #fbfbfb;
+.mainmenu-area {background: none repeat scroll 0 0 #f5f5f5;
 font-family: "Roboto Condensed",sans-serif;
 text-transform: uppercase;
 width: 100%;
 z-index: 999;}
 
-
+hr{
+    margin:0;
+    margin-bottom: 10px;
+}
 
 .logo h1 {
-    font-size: 40px;
     margin: 30px 0;font-weight: 400;
 }
 .logo h1 a {
@@ -91,6 +97,9 @@ z-index: 999;}
 .logo h1 a:hover {text-decoration: none;opacity: .7}
 .logo h1 a span {
     color: #e67e22;
+}
+.logo h1 a img{
+    height: 48px;
 }
 .shopping-item {
     border: 1px solid #ddd;
@@ -101,14 +110,14 @@ z-index: 999;}
     position: relative;
 }
 .shopping-item a {
-    color: #666;
+    color: #f8f8f8;
 }
 .cart-amunt {
-    color: #e67e22;
+    color: #3a85e0;
     font-weight: 700;
 }
 .product-count {
-    background: none repeat scroll 0 0 #e67e22;
+    background: none repeat scroll 0 0 #3a85e0;
     border-radius: 50%;
     color: #fff;
     display: inline-block;
@@ -127,8 +136,8 @@ z-index: 999;}
 
 
 .shopping-item:hover {
-    background: none repeat scroll 0 0 #e67e22;
-    border-color: #e67e22;
+    background: none repeat scroll 0 0 #3a85e0;
+    border-color: #3a85e0;
 }
 .shopping-item:hover a {
     color: #fff;text-decoration: none
@@ -142,14 +151,14 @@ z-index: 999;}
 
 
 .mainmenu-area ul.navbar-nav li a {
-    color: #6e6a6a;
+    color: #181818;
     font-size: 14px;
     padding: 20px;
 }
 
 /*.mainmenu-area ul.navbar-nav li:hover a, .mainmenu-area ul.navbar-nav li.active a {background: #e67e22; color:#FFF;}*/
 .mainmenu-area .nav li a:hover{
-    background: #e67e22; color:#FFF;
+    background: #3a85e0; color:#FFF;
 }
 
 .mainmenu-area .nav > li > a:focus {color: #FFF;}
@@ -532,7 +541,7 @@ color: #999;
 padding: 35px 0 180px;}
 
 
-.footer-bottom-area {background: #000;color: #fff}
+.footer-bottom-area {background: #181818;color: #fff}
 .footer-about-us span {
   color: #e67e22;
 }
@@ -598,10 +607,9 @@ padding: 35px 0 180px;}
 .newsletter-form {
     margin-top: 25px;
 }
-a {color: #e67e22}
 a:hover, a:focus {color: #17a78b}
 .footer-bottom-area {
-  background: none repeat scroll 0 0 #000;
+  background: none repeat scroll 0 0 #181818;
   color: #fff;
   padding-bottom: 40px;
 }
@@ -659,14 +667,15 @@ width: 10px;
   margin: 10px 0 0;
 }
 
-.product-big-title-area {background: url("../img/crossword.png") repeat scroll 0 0 #e67e22}
+.product-big-title-area {background: url("../img/beanstalk.png") repeat scroll 0 0 #e67e22}
 
 .product-bit-title h2 {
-  font-family: raleway;
-  font-size: 50px;
-  font-weight: 200;
-  margin: 0;
-  padding: 50px 0;color: #fff;
+    font-family: raleway;
+    font-size: 50px;
+    font-weight: 200;
+    margin: 0;
+    padding: 50px 0;
+    color: #181818;
 }
 
 .single-product-area .zigzag-bottom {background-color: #f4f4f4}

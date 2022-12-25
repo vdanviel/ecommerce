@@ -4,9 +4,9 @@ namespace PERSONAL;
 
 use PERSONAL\DB\DBconnect;
 use PERSONAL\Model;
+use PERSONAL\TEMPLATE\Visual;
 
-class Product extends Model
-{
+class Product extends Model{
 
     public static function findoneproduct($id){
 
@@ -26,33 +26,57 @@ class Product extends Model
 
     }
 
-    public function registercategory(){
+    public function registerproduct(){
         $db = new DBconnect();
 
-        $db->queryCommand("CALL sp_products_save(:idproduct, :desproduct, :vlprice, :vlwidth, :vlheight, :vllength, :vlweight, :desurl)", array(
-                ":idproduct" => strtoupper($this->getidproduct()),
-                ":desproduct" => $this->getdesproduct()
+        $tmp_file = $_FILES['imgproduct'];//VAR PARA A IMAGEM
+
+        $db->queryCommand("INSERT INTO tb_products (desproduct, vlprice, vlwidth, vlheight, vllength, vlweight, imgproduct, desurl) VALUES(:desproduct, :vlprice, :vlwidth, :vlheight, :vllength, :vlweight, :imgproduct, :desurl);", array(
+            ":desproduct" => $this->getdesproduct(),
+            ":vlprice" => $this->getvlprice(),
+            ":vlwidth" => $this->getvlwidth(),
+            ":vlheight" => $this->getvlheight(),
+            ":vllength" => $this->getvllength(),
+            ":vlweight" => $this->getvlweight(),
+            ":imgproduct" => $tmp_file['name'],
+            ":desurl" => $this->getdesurl()
         ));
+
+        $path = "./vendor/PERSONAL/template/adm-site/uploaded-files";
+        
+        if (move_uploaded_file($tmp_file['tmp_name'], $path."/".$tmp_file['name'])) {
+    		return true;
+    	}else{
+		    return false;
+	    }
 
         }
 
     public function editproduct($id){
         $db = new DBconnect();
 
-        $result = $db->queryCommand("UPDATE tb_products SET desproduct='',vlprice='',vlwidth='',vlheight='',vllength='',vlweight='',desurl='' WHERE 1",
+        $result = $db->queryCommand("UPDATE tb_products SET desproduct=:desproduct, vlprice=:vlprice, vlwidth=:width, vlheight=:vlheight, vllength=:vllenght, vlweight=:vlweight, imgproduct=:imgproduct, desurl=:desurl WHERE idproduct = :id",
             array(
-                ":name" => strtoupper($this->getdescategory()),
+                ":desproduct" => $this->getdesproduct(),
+                ":vlprice" => $this->getvlprice(),
+                ":vlwidth" => $this->getvlwidth(),
+                ":vlheight" => $this->getvlheight(),
+                ":vllength" => $this->getvllength(),
+                ":vlweight" => $this->getvlweight(),
+                ":imgproduct" => $this->getimgproduct(),
+                ":desurl" => $this->getdesurl(),
                 ":id" => $id
             ));
     }
 
-    public function deletecategory($id){
+    public function deleteproduct($id){
 
         $db = new DBconnect();
 
-        $db->queryCommand("DELETE FROM tb_categories WHERE idcategory = :id",
+        $db->queryCommand("DELETE FROM tb_products WHERE idproduct = :id",
         array(
             ":id" => $id
         ));
     }
+
 }

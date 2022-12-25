@@ -68,6 +68,28 @@ body {
 .layout-top-nav .main-footer {
   margin-left: 0;
 }
+/*Image Input on Product-create*/
+
+.imgproduct label{
+  width: 150px;
+  height: 150px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: #d2d6de 1px solid;
+  color: #d2d6de;
+  cursor: pointer;
+}
+.img-preview{
+  text-align: center;
+}
+.imgproduct input[type=file]{
+  display: none !important;
+}
+#img-preview{
+  width: 100%;
+}
 @media (max-width: 767px) {
   .content-wrapper,
   .right-side,

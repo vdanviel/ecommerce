@@ -281,12 +281,12 @@ class User extends Model
         $this->setdata($result[0]);
     }
 
-    public function edituser(){
+    public function edituser($id){
         $db = new DBconnect();
             
         $result = $db->select("CALL sp_usersupdate_save(:iduser, :desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)",
         array(
-            ":iduser" => substr($_SERVER['REQUEST_URI'],strpos($_SERVER['REQUEST_URI'],"/",17) + 1,strlen($_SERVER['REQUEST_URI'])),
+            ":iduser" => $id,
             ":desperson" => $this->getdesperson(),
             ":deslogin" => strtoupper($this->getdesperson()),
             ":despassword" => $this->getdespassword(),

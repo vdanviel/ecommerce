@@ -3,6 +3,8 @@ session_start();
 require_once("vendor/autoload.php");
 
 use PERSONAL\Category;
+use PERSONAL\Product;
+use PERSONAL\TEMPLATE\Visual;
 use \Slim\Slim;
 use \PERSONAL\USER\User;
 
@@ -13,6 +15,10 @@ $app = new Slim();
 
 #CLIENT ROTES
 $app->get('/', function () {
+	
+	$visual = new Visual();
+	$product = Product::listdata();
+	$category = Category::listdata();
 
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/index.php");
@@ -21,7 +27,7 @@ $app->get('/', function () {
 
 $app->get('/lista-produtos', function () {
 
-    $data = \PERSONAL\Product::listdata();
+    $product = \PERSONAL\Product::listdata();
 
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/lista-produtos.php");
@@ -226,7 +232,7 @@ $app->post('/admin/users/:id', function ($id) {
 		$_POST['despassword'] = $data[0]['despassword'];
 		$_POST['inadmin'] = (isset($_POST['inadmin']) ? '1' : '0');
 		$user->setdata($_POST);
-		$user->edituser();
+		$user->edituser($id);
 
 		$statusE = "SUCCESS";
 	} catch (\Throwable $e) {
@@ -331,6 +337,7 @@ $app->get('/admin/categories/:id/delete', function($id){
 });
 
 #products
+#lista
 $app->get('/admin/products', function(){
     User::verifylogin();
 
@@ -341,6 +348,7 @@ $app->get('/admin/products', function(){
     require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
 });
 
+#criar
 $app->get('/admin/products/create', function(){
     User::verifylogin();
 
@@ -356,34 +364,90 @@ $app->post('/admin/products/create', function(){
 
    	$product = new \PERSONAL\Product();
 
-	if ($_POST['desproduct'] == null ||
-		$_POST['vlprice'] == null ||
-		$_POST['vlwidth'] == null ||
-		$_POST['vlheight'] == null ||
-		$_POST['vllength'] == null ||
-		$_POST['vlweight'] == null ||
-		$_POST['desurl'] == null ||
-		$_FILES['imgproduct'] == null
-		) {
-			echo "<script>alert('Nenhum dos campos podem estar vazio.')</script>";
-			require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
-			require_once("vendor/PERSONAL/template/adm-site/products-create.php");
-			require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
-			exit;
+	if ($_POST['desproduct'] == null || $_POST['vlprice'] == null || $_POST['vlwidth'] == null || $_POST['vlheight'] == null || $_POST['vllength'] == null || $_POST['vlweight'] == null || $_POST['desurl'] == null || $_FILES['imgproduct']['name'] == null) {
+			
+				$_POST['nofields'] = true;
+				require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+				require_once("vendor/PERSONAL/template/adm-site/products-create.php");
+				require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+				exit;
+
 	}else{
 			try {
 				$product->setdata($_POST);
 				$product->registerproduct();
 		
-				$statusR = "SUCCESS";
+				header("location: http://localhost/ecommerce/admin/products");
+				exit;
 			} catch (\Throwable $e) {
-				$statusR = "ERROR: ".print_r($e);
+				$_POST['statusR'] = "ERROR: ".print_r($e);
+
+				require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+				require_once("vendor/PERSONAL/template/adm-site/products.php");
+				require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+				exit;
 			} 
+
 	}
+});
+
+#editar
+$app->get('/admin/products/:id', function($id){
+    User::verifylogin();
+
+    $data = \PERSONAL\Product::findoneproduct($id);
 
     require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
-    require_once("vendor/PERSONAL/template/adm-site/products.php");
+    require_once("vendor/PERSONAL/template/adm-site/products-update.php");
     require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->post('/admin/products/:id', function($id){
+
+	User::verifylogin();
+
+	$data = \PERSONAL\Product::listdata();
+
+    $product = new Product();
+
+	try {
+        $product->setdata($_POST);
+        $product->editproduct($id);
+
+		header("location: http://localhost/ecommerce/admin/products");
+		exit;
+	} catch (\Throwable $e) {
+		$statusE = "ERROR: ".$e;
+		require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+		require_once("vendor/PERSONAL/template/adm-site/products.php");
+		require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+	}
+	
+});
+
+#excluir
+$app->get('/admin/products/:id/delete', function($id){
+
+	User::verifylogin();
+
+	$product = new Product();
+
+	$data = Product::listdata();
+	try {
+		$product->setdata($_POST);
+		$product->deleteproduct($id);
+
+		header("location: http://localhost/ecommerce/admin/products");
+		exit;
+	} catch (\Throwable $e) {
+		$statusD = "ERROR: ".$e;
+
+		require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+		require_once("vendor/PERSONAL/template/adm-site/products.php");
+		require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+		exit;
+	}
+
 });
 
 $app->run();

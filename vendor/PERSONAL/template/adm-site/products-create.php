@@ -20,7 +20,8 @@
   	<div class="col-md-12">
   		<div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Novo Produto</h3>
+          <h3 class="box-title">Novo Produto</h3><br>
+          <b style="color: red;"><?php  echo isset($_POST['nofields'])? "Os campos não podem estar vazios." : "" ?></b>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
@@ -28,35 +29,35 @@
           <div class="box-body">
             <div class="form-group">
               <label for="desproduct">Nome da produto</label>
-              <input type="text" class="form-control" id="desproduct" name="desproduct" placeholder="Digite o nome do produto">
+              <input value="<?=isset($_POST['desproduct'])? $_POST['desproduct']:null?>" type="text" class="form-control" id="desproduct" name="desproduct" placeholder="Digite o nome do produto">
             </div>
             <div class="form-group">
               <label for="vlprice">Preço</label>
-              <input type="number" class="form-control" id="vlprice" name="vlprice" step="0.01" placeholder="0.00">
+              <input value="<?=isset($_POST['vlprice'])? $_POST['vlprice']:null?>" type="number" class="form-control" id="vlprice" name="vlprice" step="0.01" placeholder="0.00">
             </div>
             <div class="form-group">
               <label for="vlwidth">Largura</label>
-              <input type="number" class="form-control" id="vlwidth" name="vlwidth" step="0.01" placeholder="0.00">
+              <input value="<?=isset($_POST['vlwidth'])? $_POST['vlwidth']:null?>" type="number" class="form-control" id="vlwidth" name="vlwidth" step="0.01" placeholder="0.00">
             </div>
             <div class="form-group">
               <label for="vlheight">Altura</label>
-              <input type="number" class="form-control" id="vlheight" name="vlheight" step="0.01" placeholder="0.00">
+              <input value="<?=isset($_POST['vlheight'])? $_POST['vlheight']:null?>" type="number" class="form-control" id="vlheight" name="vlheight" step="0.01" placeholder="0.00">
             </div>
             <div class="form-group">
               <label for="vllength">Comprimento</label>
-              <input type="number" class="form-control" id="vllength" name="vllength" step="0.01" placeholder="0.00">
+              <input value="<?=isset($_POST['vllength'])? $_POST['vllength']:null?>" type="number" class="form-control" id="vllength" name="vllength" step="0.01" placeholder="0.00">
             </div>
             <div class="form-group">
               <label for="vlweight">Peso</label>
-              <input type="number" class="form-control" id="vlweight" name="vlweight" step="0.01" placeholder="0.00">
+              <input value="<?=isset($_POST['vlweight'])? $_POST['vlweight']:null?>" type="number" class="form-control" id="vlweight" name="vlweight" step="0.01" placeholder="0.00">
             </div>
               <div class="form-group">
                   <label for="desurl">Url</label>
-                  <input type="text" class="form-control" id="desurl" name="desurl" placeholder="preview-do-produto-na-url-v1">
+                  <input value="<?=isset($_POST['desurl'])? $_POST['desurl']:null?>" type="text" class="form-control" id="desurl" name="desurl" placeholder="preview-do-produto-na-url-v1">
               </div>
               <!--Imagem-->
               <div class="form-group imgproduct">
-                <b>Escolha uma imagem</b>
+                <b><p>Escolha uma imagem*</p></b>
                   <label for="imgproduct">
                       <span class="span-img-preview">
                         <img src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/img/general/no-preview.jpeg" id="img-preview" alt="img-preview">

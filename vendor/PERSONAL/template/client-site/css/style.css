@@ -96,7 +96,7 @@ hr{
 }
 .logo h1 a:hover {text-decoration: none;opacity: .7}
 .logo h1 a span {
-    color: #e67e22;
+    color: #184f92;
 }
 .logo h1 a img{
     height: 48px;
@@ -200,7 +200,8 @@ hr{
 }
 .block-slider img{
 	width: 100%;
-	height: auto;
+	height: 500px;
+    object-fit: cover;
 }
 .block-slider .bx-prev{
 	left: 0px;
@@ -218,9 +219,9 @@ hr{
 }
 .block-slider .bx-prev:hover,
 .block-slider .bx-next:hover{
-	background: #e67e22;
+	background: #184f92;
 	color: #fff;
-	border-color: #e67e22;
+	border-color: #184f92;
 }
 
 /*------------------
@@ -248,7 +249,7 @@ hr{
 	border-radius: 50%;
 }
 .block-slider .bx-pager-item a.active{
-	background: #1bd172;
+	background: #184f92;
 }
 .block-slider .caption-group{
 	position: absolute;
@@ -266,7 +267,7 @@ hr{
 	margin-top: 27px;
 }
 .block-slider .caption-group .primary{
-	color: #1bd172;
+	color: #184f92;
 }
 .block-slider .caption-group .caption{
 
@@ -317,7 +318,7 @@ hr{
   color: #fff;
   width: 28px;
   height: 28px;
-  background-color: #e67e22;
+  background-color: #184f92;
   border-radius: 90%;
   text-align: center;
   line-height: 26px;
@@ -366,6 +367,14 @@ hr{
 
 .product-f-image {
     position: relative;
+    height: 320px;
+    display: flex;
+    background-color: #ffff;
+}
+.product-f-image img {
+    align-self: center;
+    object-fit: cover;
+    padding: 0px 5px;
 }
 .product-hover {
     height: 100%;
@@ -385,7 +394,7 @@ hr{
   width: 100%;transition: .4s;
 }
 .product-hover a {
-    background: none repeat scroll 0 0 #e67e22;
+    background: none repeat scroll 0 0 #184f92;
     border-radius: 5px;
     color: #fff;
     display: block;
@@ -396,7 +405,7 @@ hr{
     position: absolute;
     text-align: center;
     text-transform: uppercase;
-    border: 1px solid #e67e22;
+    border: 1px solid #184f92;
     width: 80%;z-index: 99;transition: .4s;
 }
 .product-hover a:hover {
@@ -404,7 +413,7 @@ hr{
   text-decoration: none;border-color: #444;
 }
 .product-carousel-price ins {
-  color: #e67e22;
+  color: #184f92;
   font-weight: 700;
   margin-right: 5px;
   text-decoration: none;
@@ -426,7 +435,7 @@ hr{
     color: #222;
 }
 .single-product p {
-    color: #e67e22;
+    color: #184f92;
     font-weight: 700;
 }
 
@@ -449,13 +458,13 @@ hr{
 }
 
 .latest-product .owl-nav div, .related-products-wrapper .owl-nav div {
-  background:#fa8072;
+  background:#184f92;
   color:#FFF;
   display: inline-block;
   margin-left: 15px;
   padding: 1px 10px;
 }
-.latest-product .owl-nav div:hover, .brand-wrapper .owl-nav div:hover, .related-products-wrapper .owl-nav div:hover {color: #FFF; background:#f95f5f;}
+.latest-product .owl-nav div:hover, .brand-wrapper .owl-nav div:hover, .related-products-wrapper .owl-nav div:hover {color: #FFF; background:#3a85e0;}
 .brand-list {padding-top: 40px;}
 .brand-list .owl-nav {
   position: absolute;
@@ -471,7 +480,7 @@ hr{
 }
 
 .brand-wrapper .owl-nav div {
-  background:#fa8072;
+  background:#3a85e0;
   color:#FFF;
   display: inline-block;
   margin-left: 15px;
@@ -507,7 +516,7 @@ hr{
     margin-bottom: 10px;
 }
 .product-wid-price ins {
-    color: #e67e22;
+    color: #184f92;
     font-weight: 700;
     margin-right: 10px;
     text-decoration: none;
@@ -516,10 +525,10 @@ hr{
     color: #222;
 }
 .single-wid-product h2 a:hover, .single-product h2 a:hover {
-    color: #e67e22;
+    color: #184f92;
 }
 .wid-view-more {
-    background: none repeat scroll 0 0 #e67e22;
+    background: none repeat scroll 0 0 #184f92;
     color: #fff;
     padding: 3px 15px;
     position: absolute;
@@ -543,7 +552,7 @@ padding: 35px 0 180px;}
 
 .footer-bottom-area {background: #181818;color: #fff}
 .footer-about-us span {
-  color: #e67e22;
+  color: #184f92;
 }
 .footer-wid-title {
   font-family: raleway;
@@ -570,7 +579,7 @@ padding: 35px 0 180px;}
 
 
 .footer-social a {
-  background: none repeat scroll 0 0 #e67e22;
+  background: none repeat scroll 0 0 #184f92;
   color: #fff;
   display: inline-block;
   font-size: 20px;
@@ -579,7 +588,7 @@ padding: 35px 0 180px;}
   margin-right: 10px;
   padding-top: 5px;
   text-align: center;
-  width: 40px;border: 1px solid #e67e22;
+  width: 40px;border: 1px solid #184f92;
 }
 
 .footer-social a:hover {background-color: #222;border-color: #666}
@@ -595,13 +604,13 @@ padding: 35px 0 180px;}
     width: 100%;
 }
 .newsletter-form input[type="submit"] {
-    background: none repeat scroll 0 0 #e67e22;
+    background: none repeat scroll 0 0 #184f92;
     border: medium none;
     color: #fff;
     display: inline-block;
     font-size: 18px;
     padding: 7px 20px;
-    text-transform: uppercase;border: 1px solid #e67e22;
+    text-transform: uppercase;border: 1px solid #184f92;
 }
 .newsletter-form input[type="submit"]:hover {background: #222;border-color: #666}
 .newsletter-form {
@@ -667,7 +676,7 @@ width: 10px;
   margin: 10px 0 0;
 }
 
-.product-big-title-area {background: url("../img/beanstalk.png") repeat scroll 0 0 #e67e22}
+.product-big-title-area {background: url("../img/beanstalk.png") repeat scroll 0 0 #184f92}
 
 .product-bit-title h2 {
     font-family: raleway;
@@ -702,7 +711,7 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
     padding: 10px;
 }
 input[type="submit"], button[type=submit] {
-    background: none repeat scroll 0 0 #e67e22;
+    background: none repeat scroll 0 0 #184f92;
     border: medium none;
     color: #fff;
     padding: 11px 20px;
@@ -731,7 +740,7 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
     color: #222;
 }
 .product-sidebar-price > ins {
-    color: #e67e22;
+    color: #184f92;
     font-weight: 700;
     margin-right: 10px;
     text-decoration: none;
@@ -785,7 +794,7 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
     margin-bottom: 25px;
 }
 .product-inner-price > ins {
-    color: #e67e22;
+    color: #184f92;
     font-weight: 700;
     margin-right: 10px;
     text-decoration: none;
@@ -795,12 +804,12 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
     margin-right: 15px;
 }
 .quantity input[type="number"] {
-    border: 1px solid #e67e22;
+    border: 1px solid #184f92;
     padding: 5px;
     width: 50px;
 }
 .add_to_cart_button {
-    background: none repeat scroll 0 0 #e67e22;
+    background: none repeat scroll 0 0 #184f92;
     border: medium none;
     color: #fff;
     padding: 6px 25px;display: inline-block
@@ -823,7 +832,7 @@ form.cart {
     display: inline-block;
 }
 .product-tab li.active {
-    background: none repeat scroll 0 0 #e67e22;
+    background: none repeat scroll 0 0 #184f92;
 }
 .product-tab li.active a {
     color: #fff;
@@ -914,7 +923,7 @@ div.quantity input.minus {
     margin-right: -4px;
 }
 div.quantity input.plus, div.quantity input.minus {
-    background: none repeat scroll 0 0 #e67e22;
+    background: none repeat scroll 0 0 #184f92;
     border: medium none;
     color: #fff;
     height: 32px;
@@ -943,7 +952,7 @@ td.actions div.coupon {
     width: 40%;
 }
 .cart-collaterals h2 {
-    color: #e67e22;
+    color: #184f92;
     font-size: 25px;
     margin-bottom: 25px;
     text-transform: uppercase;
@@ -975,7 +984,7 @@ div.cart-collaterals ul.products li.product {
 .onsale {
 }
 div.cart-collaterals ul.products li.product .onsale {
-    background: none repeat scroll 0 0 #e67e22;
+    background: none repeat scroll 0 0 #184f92;
     color: #fff;
     padding: 5px 10px;
     position: absolute;
@@ -995,7 +1004,7 @@ div.cart-collaterals ul.products li.product .price {
 .price > ins {
 }
 div.cart-collaterals ul.products li.product .price ins {
-    color: #e67e22;
+    color: #184f92;
     font-weight: 700;
     margin-left: 10px;
     text-decoration: none;
@@ -1027,7 +1036,7 @@ div.cart-collaterals ul.products li.product .price ins {
     width: 100%;
 }
 #customer_details h3 {
-    color: #e67e22;
+    color: #184f92;
     font-size: 20px;
     text-transform: uppercase;
 }
@@ -1037,7 +1046,7 @@ div.cart-collaterals ul.products li.product .price ins {
     padding: 15px;
 }
 #order_review_heading {
-    color: #e67e22;
+    color: #184f92;
     font-size: 20px;
     text-transform: uppercase;
 }
@@ -1072,9 +1081,9 @@ table.shop_table td.product-remove a {
 
 table.shop_table td.product-remove a:hover {color: #fff;background: red;text-decoration: none}
 table.shop_table td.product-name a{color: #222;}
-table.shop_table td.product-name a:hover {color: #e67e22;text-decoration: none}
+table.shop_table td.product-name a:hover {color: #184f92;text-decoration: none}
 div.quantity input.plus:hover, div.quantity input.minus:hover {background-color: #222}
-div.cart-collaterals ul.products li.product a:hover h3 {color: #e67e22}
+div.cart-collaterals ul.products li.product a:hover h3 {color: #184f92}
 div.cart-collaterals ul.products li.product a:hover {text-decoration: none}
 
 div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background-color: #222}
@@ -1132,5 +1141,5 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 .single-shop-product {margin-bottom: 50px}
 
 .pagination > li > a, .pagination > li > span {
-  color: #e67e22;
+  color: #184f92;
 }

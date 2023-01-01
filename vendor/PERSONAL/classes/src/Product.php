@@ -29,8 +29,6 @@ class Product extends Model{
     public function registerproduct(){
         $db = new DBconnect();
 
-        $tmp_file = $_FILES['imgproduct'];//VAR PARA A IMAGEM
-
         $db->queryCommand("INSERT INTO tb_products (desproduct, vlprice, vlwidth, vlheight, vllength, vlweight, imgproduct, desurl) VALUES(:desproduct, :vlprice, :vlwidth, :vlheight, :vllength, :vlweight, :imgproduct, :desurl);", array(
             ":desproduct" => $this->getdesproduct(),
             ":vlprice" => $this->getvlprice(),
@@ -38,24 +36,21 @@ class Product extends Model{
             ":vlheight" => $this->getvlheight(),
             ":vllength" => $this->getvllength(),
             ":vlweight" => $this->getvlweight(),
-            ":imgproduct" => $tmp_file['name'],
+            ":imgproduct" => $_FILES["imgproduct"]["name"],
             ":desurl" => $this->getdesurl()
         ));
 
         $path = "./vendor/PERSONAL/template/adm-site/uploaded-files";
         
-        if (move_uploaded_file($tmp_file['tmp_name'], $path."/".$tmp_file['name'])) {
-    		return true;
-    	}else{
-		    return false;
-	    }
-
-        }
+        move_uploaded_file($_FILES["imgproduct"]["tmp_name"], $path."/".$_FILES["imgproduct"]["name"]);
+    }
 
     public function editproduct($id){
         $db = new DBconnect();
 
-        $result = $db->queryCommand("UPDATE tb_products SET desproduct=:desproduct, vlprice=:vlprice, vlwidth=:width, vlheight=:vlheight, vllength=:vllenght, vlweight=:vlweight, imgproduct=:imgproduct, desurl=:desurl WHERE idproduct = :id",
+        if ($_FILES['imgproduct']['name'] == null) {
+            
+            $db->queryCommand("UPDATE tb_products SET desproduct=:desproduct, vlprice=:vlprice, vlwidth=:vlwidth, vlheight=:vlheight, vllength=:vllength, vlweight=:vlweight, desurl=:desurl WHERE idproduct = :id",
             array(
                 ":desproduct" => $this->getdesproduct(),
                 ":vlprice" => $this->getvlprice(),
@@ -63,20 +58,73 @@ class Product extends Model{
                 ":vlheight" => $this->getvlheight(),
                 ":vllength" => $this->getvllength(),
                 ":vlweight" => $this->getvlweight(),
-                ":imgproduct" => $this->getimgproduct(),
                 ":desurl" => $this->getdesurl(),
                 ":id" => $id
             ));
+
+        }
+
+        if ($_FILES['imgproduct']['name'] ==! null) {
+
+            #excluir o arquivo primeiro
+            $dataimg = Product::findoneproduct($id);
+            $img = $dataimg[0]['imgproduct'];
+
+            $path_to_delete = "./vendor/PERSONAL/template/adm-site/uploaded-files/$img";
+        
+            if (file_exists($path_to_delete)) {
+                unlink($path_to_delete);
+            }else {
+                echo "File cannot be deleted.";
+            }
+            
+            #processo de substituição dos dados
+            $db->queryCommand("UPDATE tb_products SET desproduct=:desproduct, vlprice=:vlprice, vlwidth=:vlwidth, vlheight=:vlheight, vllength=:vllength, vlweight=:vlweight, desurl=:desurl, imgproduct=:imgproduct WHERE idproduct = :id",
+            array(
+                ":desproduct" => $this->getdesproduct(),
+                ":vlprice" => $this->getvlprice(),
+                ":vlwidth" => $this->getvlwidth(),
+                ":vlheight" => $this->getvlheight(),
+                ":vllength" => $this->getvllength(),
+                ":vlweight" => $this->getvlweight(),
+                ":imgproduct" => $_FILES['imgproduct']['name'],
+                ":desurl" => $this->getdesurl(),
+                ":id" => $id
+            ));
+
+            #adicionar nova foto
+            $path = "./vendor/PERSONAL/template/adm-site/uploaded-files";
+        
+            var_dump($_FILES['imgproduct']);
+
+            move_uploaded_file($_FILES['imgproduct']['tmp_name'], $path."/".$_FILES['imgproduct']['name']);
+
+        }
+
     }
 
     public function deleteproduct($id){
 
         $db = new DBconnect();
 
+        #excluir o arquivo primeiro
+        $dataimg = Product::findoneproduct($id);
+        $img = $dataimg[0]['imgproduct'];
+
+        $path_to_delete = "./vendor/PERSONAL/template/adm-site/uploaded-files/$img";
+        
+        if (file_exists($path_to_delete)) {
+            unlink($path_to_delete);
+        }else {
+            return "File cannot be deleted.";
+        }
+
+        #excluir o registro
         $db->queryCommand("DELETE FROM tb_products WHERE idproduct = :id",
         array(
             ":id" => $id
         ));
+        
     }
 
 }

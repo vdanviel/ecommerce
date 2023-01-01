@@ -6,8 +6,7 @@ namespace PERSONAL\TEMPLATE;
 class Visual
 {
 
-    public static function levelTheRoute()#retorna '../' para cada rota acima de 1
-    {
+    public static function levelTheRoute(){#retorna '../' para cada rota acima de 1
         #uri da paginal atual
         $uriname = $_SERVER['REQUEST_URI']; #$_SERVER['REQUEST_URI'] - retorna o caminho depois do host.
 
@@ -44,5 +43,17 @@ class Visual
 
             return "Default host version";
         }
+    }
+
+    public function formatprice($price){
+
+        if (strpos($price,".") == false) {
+            
+            echo "the price is alredy written in the right format.";
+            
+        }else{
+            echo str_replace(".",",",$price);
+        }
+
     }
 }

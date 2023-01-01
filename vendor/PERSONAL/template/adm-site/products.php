@@ -29,7 +29,8 @@
             echo "</div>";
         }else{
             echo "<div class='alert alert-danger container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
-            echo "Falha ao editar produto.";
+            //echo "Falha ao editar produto.";
+            echo $statusE;
             echo "<button class='close' data-dismiss='alert'>&times;</button>";
             echo "</div>";
         }
@@ -43,7 +44,7 @@
             echo "</div>";
         }else{
             echo "<div class='alert alert-danger container' style='margin: 15px; margin-bottom:0; margin-left:0;' alert-dismissible>";
-            echo "Erro ao excluir produto.";
+            echo "Erro ao excluir produto: ".$statusD;
             echo "<button class='close' data-dismiss='alert'>&times;</button>";
             echo "</div>";
         }
@@ -92,7 +93,7 @@
                     echo "<td>".$data[$key]['vlheight']."</td>";
                     echo "<td>".$data[$key]['vllength']."</td>";
                     echo "<td>".$data[$key]['vlweight']."</td>";
-                    echo "<td><a href='/admin/products/".$data[$key]['idproduct']."' class='btn btn-white'><i class='fa fa-pencil'><i></a></td>";
+                    echo "<td><a href='http://localhost/ecommerce/admin/products/".$data[$key]['idproduct']."' class='btn btn-white'><i class='fa fa-pencil'><i></a></td>";
                     echo "</tr>";
                 }
                 ?>

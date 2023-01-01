@@ -96,11 +96,6 @@
 <script src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/js/app.min.js"></script>
-<script src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/bootstrap/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/js/app.min.js"></script>
 <!--JS personal functions-->
 <script src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/classes/src/TEMPLATE/functions.js"></script>
 

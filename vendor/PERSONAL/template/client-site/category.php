@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="product-bit-title text-center">
-                    <h2><?=$data[0]['descategory']?></h2>
+                    <h2><?=$category[0]['descategory']?></h2>
                 </div>
             </div>
         </div>
@@ -15,21 +15,36 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-md-3 col-sm-6">
-                <div class="single-shop-product">
-                    <div class="product-upper">
-                        <img src="/res/site/img/product-2.jpg" alt="">
-                    </div>
-                    <h2><a href="">Apple new mac book 2015 March :P</a></h2>
-                    <div class="product-carousel-price">
-                        <ins>$899.00</ins> <del>$999.00</del>
-                    </div>  
-                    
-                    <div class="product-option-shop">
-                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
-                    </div>                       
-                </div>
-            </div>
+        <?php
+
+            foreach ($productscategory as $key => $value) {
+                echo '<div class="col-md-3 col-sm-6">';
+                echo '<div class="single-shop-product">';
+                echo '<div class="product-upper">';
+                echo '<img ';
+                echo "src=";
+                echo $visual->levelTheRoute().'./vendor/PERSONAL/template/adm-site/uploaded-files/';
+                echo $productscategory[$key]['imgproduct']." alt='product-image' ";
+                echo ">";
+                echo '<div class="product-info">';
+                echo '<h2><a href="">'.$productscategory[$key]['desproduct'].'</a></h2>';
+                echo '<div class="product-carousel-price">';
+                echo '<ins>R$';
+                echo $visual->formatprice($productscategory[$key]['vlprice']);
+                echo '</ins>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+               
+                echo '<div class="product-option-shop">';
+                echo '<a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Adicionar ao Carrinho</a>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+            }
+        ?>
+
+        
 
         </div>
         
@@ -39,17 +54,19 @@
                     <nav>
                         <ul class="pagination">
                         <li>
-                            <a href="#" aria-label="Previous">
+                            <a href="http://localhost/ecommerce/category/5/<?= $page == 1 ? $page = 1 : $page - 1?>" id="previous-page" aria-label="Previous">
                             <span aria-hidden="true">«</span>
                             </a>
                         </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
+
+                        <?php
+                            for ($i = 1; $i < $pages + 1; $i++) { 
+                                echo '<li><a href="http://localhost/ecommerce/category/'.$id.'/'.$i.'">'.$i.'</a></li>';
+                            }
+                        ?>
+                       
                         <li>
-                            <a href="#" aria-label="Next">
+                            <a <?= intval($page) == $pages ? 'onmouseover="button_next_off()' : ''?> href="http://localhost/ecommerce/category/<?=$id?>/<?=$page+1?>" id="next-page" aria-label="Next">
                             <span aria-hidden="true">»</span>
                             </a>
                         </li>

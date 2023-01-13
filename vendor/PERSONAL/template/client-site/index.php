@@ -36,10 +36,8 @@
                                 echo "<a href='#' class='add-to-cart-link'><i class='fa fa-shopping-cart'></i> Adicionar ao Carrinho</a>";
                                 echo "<a href='#' class='view-details-link'><i class='fa fa-link'></i> Ver Detalhes</a>";
                                 echo "</div>";
-                                echo "</div>";
-                                    
+                                echo "</div>";                                    
                                 echo "<h2><a href='http://localhost/ecommerce/products/".$product[$key]['desurl']."'>".$product[$key]['desproduct']."</a></h2>";
-                                    
                                 echo "<div class='product-carousel-price'>";
                                 echo "<ins>";
                                 echo "R$";
@@ -47,6 +45,8 @@
                                 echo "</ins>";
                                 echo "</div>";
                                 echo "</div>";
+
+                                if ($key === 10) break;
                             }
 
                             ?>

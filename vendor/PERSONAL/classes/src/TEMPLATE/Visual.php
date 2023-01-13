@@ -26,7 +26,7 @@ class Visual
 
             }
             
-            return "Localhost version";
+            //localhost version
         }else{# se não estiver no localhost o processo é feito sem excluir nada na string $uriname, igual é feito anteriormente
 
             $filelevel = substr_count($uriname, '/');
@@ -41,11 +41,11 @@ class Visual
 
             }
 
-            return "Default host version";
+            //default host version
         }
     }
 
-    public function formatprice($price){
+    public static function formatprice($price){
 
         if (strpos($price,".") == false) {
             

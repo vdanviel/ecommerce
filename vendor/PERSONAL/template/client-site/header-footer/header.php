@@ -1,6 +1,10 @@
-<?php require_once("vendor/autoload.php"); 
+<?php require_once("vendor/autoload.php");
+
+use PERSONAL\Category;
 use \PERSONAL\TEMPLATE\Visual;
-use \PERSONAL\Product;?>
+use \PERSONAL\Product;
+$category_header = Category::listdata();
+?>
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -9,6 +13,8 @@ use \PERSONAL\Product;?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>StufeShop</title>
+
+    <link rel="icon" type="image/x-icon" href="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/adm-site/adminLTE2/dist/img/general/icon-stufeshopcopytine.ico">
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -51,8 +57,7 @@ use \PERSONAL\Product;?>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-
-                        <h1><a href="#"><img src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/img/logo-stufeshop.png"></a></h1>
+                        <h1><a href="http://localhost/ecommerce/"><img src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/img/logo-stufeshop.png"></a></h1>
                     </div>
                 </div>
                 
@@ -78,17 +83,17 @@ use \PERSONAL\Product;?>
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="http://localhost/ecommerce/lista-produtos">Produtos</a></li>
+                        <li class="active"><a href="http://localhost/ecommerce">Home</a></li>
+                        <li><a href="http://localhost/ecommerce/lista-produtos/1">Produtos</a></li>
                         <li class="dropdown dropdown-small categories">
                             <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">Categorias</a>
                             <ul class="dropdown-menu">
                                 <?php
-                                foreach($category as $key => $value){
-                                    echo "<li> <a href='http://localhost/ecommerce/category/".$category[$key]['idcategory']."'>";
-                                    echo $category[$key]['descategory'].'</a>';
-                                    echo "</li>";
-                                }
+                                    foreach($category_header as $key => $value){
+                                        echo "<li> <a href='http://localhost/ecommerce/category/".$category_header[$key]['idcategory']."/1'>";
+                                        echo $category_header[$key]['descategory'].'</a>';
+                                        echo "</li>";
+                                    }
                                 ?>
                             </ul>
                         </li>

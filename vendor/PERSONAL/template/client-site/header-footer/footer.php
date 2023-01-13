@@ -83,5 +83,8 @@
     <script type="text/javascript" src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/js/bxslider.min.js"></script>
 	<script type="text/javascript" src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/template/client-site/js/script.slider.js"></script>
 
+    <!--JS Personal Functions-->
+    <script src="<?php Visual::levelTheRoute()?>./vendor/PERSONAL/classes/src/TEMPLATE/functions.js"></script>
+
     </body>
 </html>

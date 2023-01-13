@@ -29,7 +29,7 @@
           <div class="box-body">
             <div class="form-group">
               <label for="desproduct">Nome da produto</label>
-              <input value="<?=isset($_POST['desproduct'])? $_POST['desproduct']:null?>" type="text" class="form-control" id="desproduct" name="desproduct" placeholder="Digite o nome do produto">
+              <input value="<?=isset($_POST['desproduct'])? $_POST['desproduct']:null?>" type="text" class="form-control" id="desproduct" name="desproduct" placeholder="Digite o nome do produto (54)" maxlength="54">
             </div>
             <div class="form-group">
               <label for="vlprice">Preço</label>
@@ -53,7 +53,7 @@
             </div>
               <div class="form-group">
                   <label for="desurl">Url</label>
-                  <input value="<?=isset($_POST['desurl'])? $_POST['desurl']:null?>" type="text" class="form-control" id="desurl" name="desurl" placeholder="preview-do-produto-na-url-v1">
+                  <input value="<?=isset($_POST['desurl'])? $_POST['desurl']:null?>" type="text" class="form-control" id="desurl" name="desurl" placeholder="preview-do-produto-na-url-v1 (54)" maxlength="54">
               </div>
               <!--Imagem-->
               <div class="form-group imgproduct">

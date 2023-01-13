@@ -83,6 +83,7 @@
                       echo "<tr>";
                       echo "<td>".$data[$key]["idcategory"]."</td>";
                       echo "<td>".$data[$key]["descategory"]."</td>";
+                      echo "<td><a href='http://localhost/ecommerce/admin/categories/{$data[$key]['idcategory']}/products' class='btn btn-primary'><i class='fa fa-gear'></i>&nbsp;&nbsp;Relação</a></td>";
                       echo "<td><a href='http://localhost/ecommerce/admin/categories/{$data[$key]['idcategory']}' class='btn btn-white'><i class='fa fa-pencil'></i></a></td>";
                       echo "</tr>";
                     }

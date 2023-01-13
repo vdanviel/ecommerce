@@ -45,6 +45,22 @@ class Product extends Model{
         move_uploaded_file($_FILES["imgproduct"]["tmp_name"], $path."/".$_FILES["imgproduct"]["name"]);
     }
 
+    public static function listpageitens_products($itensperpage, $page = 1){
+
+        $start = ($page - 1) * $itensperpage;
+
+        $db = new DBconnect();
+
+        $result = $db->select("SELECT * FROM tb_products LIMIT $start, $itensperpage");
+
+        $rows_total = $db->select("SELECT COUNT(*) FROM tb_products");
+
+        $info = [$result, ceil($rows_total[0]["COUNT(*)"] / $itensperpage)];
+
+        return $info;
+
+    }
+
     public function editproduct($id){
         $db = new DBconnect();
 

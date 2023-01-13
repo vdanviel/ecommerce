@@ -200,7 +200,7 @@ hr{
 }
 .block-slider img{
 	width: 100%;
-	height: 500px;
+	height: 300px;
     object-fit: cover;
 }
 .block-slider .bx-prev{
@@ -365,28 +365,34 @@ hr{
 }
 
 
-.product-f-image {
+.ccf-image {
     position: relative;
     height: 320px;
     display: flex;
     background-color: #ffff;
 }
+.product-f-image{
+    background-color: #fff;
+    height: 300px;
+    display: flex;
+    align-items: center;
+}
 .product-f-image img {
-    align-self: center;
     object-fit: cover;
     padding: 0px 5px;
 }
 .product-hover {
-    height: 100%;
+    height: 350px;
     left: 0;
     position: absolute;
     top: 0;
-    width: 100%;overflow: hidden;border: 1px solid #ddd;
+    width: 100%;
+    overflow: hidden;
 }
 .product-hover:after {
-  background: none repeat scroll 0 0 #000;
+    background-color: #18181851;
   content: "";
-  height: 100%;
+  height: 300px;
   left: -100%;
   opacity: 0.6;
   position: absolute;
@@ -429,8 +435,6 @@ hr{
     margin-bottom: 10px;
     margin-top: 15px;
 }
-
-
 .single-product h2 a {
     color: #222;
 }
@@ -495,8 +499,31 @@ hr{
   font-weight: 100;
   margin-bottom: 40px;
 }
-
-
+.product-upper{
+    height: 400px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    text-align: left !important;
+}
+.product-upper img {
+    height: auto;
+    width: 250px;
+    object-fit: cover;
+    padding: 10px;
+}
+.product-upper h2 {
+    font-size: 15px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+.product-info{
+    width: 100%;
+    text-align: center;
+    padding: 0px 15px;
+}
 .single-wid-product {
     margin-bottom: 31px;
     overflow: hidden;
@@ -511,7 +538,8 @@ hr{
     font-size: 14px;
     margin-bottom: 12px;
 }
-.product-wid-rating {
+
+roduct-wid-rating {
     color: #ffc808;
     margin-bottom: 10px;
 }
@@ -1128,11 +1156,6 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 }
 #register-form-wrap input[type="submit"] {
     margin-bottom: 15px;
-}
-
-.single-shop-product h2 {
-    font-size: 20px;
-    margin: 10px 0;
 }
 .product-option-shop {
     margin-top: 15px;

@@ -15,28 +15,57 @@ $app = new Slim();
 
 #CLIENT ROTES
 $app->get('/', function () {
-	
-	$visual = new Visual();
+
 	$product = Product::listdata();
-	$category = Category::listdata();
+ 	$visual = new Visual();
 
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/index.php");
 	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
 });
 
-$app->get('/lista-produtos', function () {
+$app->get('/lista-produtos/:page', function ($page) {
 
-    $product = \PERSONAL\Product::listdata();
+	$itensperpage = 6;
+	
+	$product_class = new Product();
+
+	$datainfoproduct = $product_class->listpageitens_products($itensperpage,$page);
+	$product = $datainfoproduct[0];
+	$pages = $datainfoproduct[1];
+	
+	$next = $page + 1;
+	$previous = $page - 1;
+
+	$visual = new Visual();
 
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/lista-produtos.php");
 	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
 });
 
-$app->get('/category/:id', function($id){
+$app->get('/product/:url', function (string $url) {
 
-    $data = Category::findonecategory($id);
+
+	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/product-detail.php");
+	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+}); 
+
+$app->get('/category/:id/:page', function($id,$page){
+
+	$visual = new Visual();
+	$category_class = new Category();
+
+	$category = $category_class->findonecategory($id);
+
+	$datainfocategory = $category_class->listpageitens_category($id,6,$page);
+
+	$productscategory = $datainfocategory[0];
+	$pages = $datainfocategory[1];
+
+	$next = $page + 1;
+	$previous = $page - 1;
 
     require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
     require_once("vendor/PERSONAL/template/client-site/category.php");
@@ -334,6 +363,38 @@ $app->get('/admin/categories/:id/delete', function($id){
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/adm-site/categories.php");
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->get('/admin/categories/:idcategory/products', function($id){
+
+	$category_class = new Category();
+
+	User::verifylogin();
+	$category = $category_class->findonecategory($id);
+	$categoryproductTRUE = $category_class->getrelatedproducts($id, true);
+	$categoryproductFALSE = $category_class->getrelatedproducts($id, false);
+	
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/adm-site/categories-products.php");
+	require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->get('/admin/categories/:idcategory/products/:idproduct/add', function($idcategory,$idproduct){
+
+	User::verifylogin();
+
+	Category::addproduct($idcategory,$idproduct);
+	header("location: http://localhost/ecommerce/admin/categories/$idcategory/products");
+	exit;
+});
+
+$app->get('/admin/categories/:idcategory/products/:idproduct/remove', function($idcategory,$idproduct){
+
+	User::verifylogin();
+
+	Category::removeproduct($idproduct);
+	header("location: http://localhost/ecommerce/admin/categories/$idcategory/products");
+	exit;
 });
 
 #products

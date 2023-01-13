@@ -1,5 +1,4 @@
-//img previwe js sytem
-
+//img previwe js system (http://localhost/ecommerce/admin/products/2)
 const regex = /[0-9]/;//regex looking for a number in a string
 if (window.location.pathname == "/ecommerce/admin/products/create" || regex.test(window.location.pathname) === true) {
 
@@ -20,5 +19,23 @@ if (window.location.pathname == "/ecommerce/admin/products/create" || regex.test
 
     }
 
+}
+
+//list-product-preview-name (http://localhost/ecommerce/lista-produtos/1)
+function previewproductname() {
+    
+    let text = document.getElementById("productname");
+
+    text.style.display = "flex";
 
 }
+
+//next button of lists is desactivated
+function button_next_off(){
+
+    var btn = document.getElementById('next-page');
+
+    btn.style.display = "none"
+
+}
+

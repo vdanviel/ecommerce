@@ -804,6 +804,9 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
 .product-main-img {
     margin-bottom: 20px;
 }
+.product-main-img img {
+    width: 535px;
+}
 .product-gallery {
     margin-bottom: 25px;
     margin-left: -15px;

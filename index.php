@@ -4,9 +4,11 @@ require_once("vendor/autoload.php");
 
 use PERSONAL\Category;
 use PERSONAL\Product;
+use PERSONAL\Cart;
 use PERSONAL\TEMPLATE\Visual;
 use \Slim\Slim;
 use \PERSONAL\USER\User;
+use Slim\Exception\NotFoundException;
 
 $app = new Slim();
 
@@ -46,6 +48,7 @@ $app->get('/lista-produtos/:page', function ($page) {
 
 $app->get('/product/:url', function (string $url) {
 
+	$productdetail = Product::productdetail($url);
 
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/product-detail.php");
@@ -73,6 +76,8 @@ $app->get('/category/:id/:page', function($id,$page){
 });
 
 $app->get('/carrinho', function () {
+
+	$cart = Cart::getcartfromsession();
 
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/carrinho.php");
@@ -103,7 +108,7 @@ $app->get('/pagamento', function () {
 #ADMIN ROTES
 $app->get('/admin', function () {
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/adm-site/index.php");
@@ -181,7 +186,7 @@ $app->get('/admin/logout', function () {
 #users
 $app->get('/admin/users', function () {
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/adm-site/users.php");
@@ -190,7 +195,7 @@ $app->get('/admin/users', function () {
 
 $app->get('/admin/users/create', function () {
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/adm-site/users-create.php");
@@ -199,7 +204,7 @@ $app->get('/admin/users/create', function () {
 
 $app->post('/admin/users/create', function () {
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	$user = new User();
 
@@ -220,7 +225,7 @@ $app->post('/admin/users/create', function () {
 });
 
 $app->get('/admin/users/:id/delete', function ($id) {
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	$user = new User;
 		
@@ -240,7 +245,7 @@ $app->get('/admin/users/:id/delete', function ($id) {
 
 $app->get('/admin/users/:id', function ($id) {
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	$data = User::findoneuser($id);
 
@@ -251,7 +256,7 @@ $app->get('/admin/users/:id', function ($id) {
 
 $app->post('/admin/users/:id', function ($id) {
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	$user = new User();
 
@@ -276,7 +281,7 @@ $app->post('/admin/users/:id', function ($id) {
 #categories
 $app->get('/admin/categories', function(){
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	Category::listdata();
 
@@ -287,7 +292,7 @@ $app->get('/admin/categories', function(){
 
 $app->get('/admin/categories/create', function(){
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	Category::listdata();
 
@@ -298,7 +303,7 @@ $app->get('/admin/categories/create', function(){
 
 $app->post('/admin/categories/create', function(){
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	$category = new Category();
 
@@ -318,7 +323,7 @@ $app->post('/admin/categories/create', function(){
 
 $app->get('/admin/categories/:id', function($id){
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	$data = Category::findonecategory($id);
 	require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
@@ -328,7 +333,7 @@ $app->get('/admin/categories/:id', function($id){
 
 $app->post('/admin/categories/:id', function($id){
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
     $category = new Category();
 
@@ -348,7 +353,7 @@ $app->post('/admin/categories/:id', function($id){
 
 $app->get('/admin/categories/:id/delete', function($id){
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	$category = new Category();
 
@@ -369,7 +374,7 @@ $app->get('/admin/categories/:idcategory/products', function($id){
 
 	$category_class = new Category();
 
-	User::verifylogin();
+	User::verifylogintemplate();
 	$category = $category_class->findonecategory($id);
 	$categoryproductTRUE = $category_class->getrelatedproducts($id, true);
 	$categoryproductFALSE = $category_class->getrelatedproducts($id, false);
@@ -381,7 +386,7 @@ $app->get('/admin/categories/:idcategory/products', function($id){
 
 $app->get('/admin/categories/:idcategory/products/:idproduct/add', function($idcategory,$idproduct){
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	Category::addproduct($idcategory,$idproduct);
 	header("location: http://localhost/ecommerce/admin/categories/$idcategory/products");
@@ -390,7 +395,7 @@ $app->get('/admin/categories/:idcategory/products/:idproduct/add', function($idc
 
 $app->get('/admin/categories/:idcategory/products/:idproduct/remove', function($idcategory,$idproduct){
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	Category::removeproduct($idproduct);
 	header("location: http://localhost/ecommerce/admin/categories/$idcategory/products");
@@ -400,7 +405,7 @@ $app->get('/admin/categories/:idcategory/products/:idproduct/remove', function($
 #products
 #lista
 $app->get('/admin/products', function(){
-    User::verifylogin();
+    User::verifylogintemplate();
 
     $data = \PERSONAL\Product::listdata();
 
@@ -411,7 +416,7 @@ $app->get('/admin/products', function(){
 
 #criar
 $app->get('/admin/products/create', function(){
-    User::verifylogin();
+    User::verifylogintemplate();
 
     require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
     require_once("vendor/PERSONAL/template/adm-site/products-create.php");
@@ -419,7 +424,7 @@ $app->get('/admin/products/create', function(){
 });
 
 $app->post('/admin/products/create', function(){
-    User::verifylogin();
+    User::verifylogintemplate();
 
 	$data = \PERSONAL\Product::listdata();
 
@@ -454,7 +459,7 @@ $app->post('/admin/products/create', function(){
 
 #editar
 $app->get('/admin/products/:id', function($id){
-    User::verifylogin();
+    User::verifylogintemplate();
 
     $data = \PERSONAL\Product::findoneproduct($id);
 
@@ -465,7 +470,7 @@ $app->get('/admin/products/:id', function($id){
 
 $app->post('/admin/products/:id', function($id){
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	$data = \PERSONAL\Product::listdata();
 
@@ -489,7 +494,7 @@ $app->post('/admin/products/:id', function($id){
 #excluir
 $app->get('/admin/products/:id/delete', function($id){
 
-	User::verifylogin();
+	User::verifylogintemplate();
 
 	$product = new Product();
 

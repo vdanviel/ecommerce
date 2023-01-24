@@ -11,6 +11,48 @@ class User extends Model
 
     const SESSION = "user";
 
+    public static function sessionuser(){
+        $obj_user = new User();
+
+        if (isset($_SESSION[User::SESSION]) && $_SESSION[User::SESSION]['iduser'] > 0) {
+            
+            $obj_user->setdata($_SESSION[User::SESSION]);
+
+        }
+
+        return $obj_user;
+    }
+
+    public static function verifylogin($inadmin = true){
+
+        if (
+        empty($_SESSION[User::SESSION])
+        ||
+        !$_SESSION[User::SESSION]
+        ||
+        empty($_SESSION[User::SESSION]["iduser"])
+        ){
+            
+            return false;
+
+        }else{
+
+            if ($inadmin === true && $_SESSION[User::SESSION]['inadmin'] === true ) {
+                
+                return true;
+
+            } else if ($inadmin === false) {
+
+                return true;
+
+            }else{
+                return false;
+            }
+
+        }
+
+    }
+
     public static function login($email, $password){
 
         $db = new DBconnect();
@@ -42,7 +84,7 @@ class User extends Model
         }
     }
 
-    public static function verifylogin($inadmin = 1){
+    public static function verifylogintemplate($inadmin = 1){
         if (
             empty($_SESSION[User::SESSION])
             ||

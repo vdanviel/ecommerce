@@ -18,6 +18,16 @@ class Product extends Model{
 
     }
 
+    public static function productdetail($url){
+
+        $db = new DBconnect();
+
+        return $db->select("SELECT * FROM tb_products INNER JOIN tb_productscategories ON tb_products.idproduct = tb_productscategories.idproduct INNER JOIN tb_categories ON tb_productscategories.idcategory = tb_categories.idcategory WHERE tb_products.desurl = :url LIMIT 1;",array(
+            ":url" => $url
+        ));
+
+    }
+
     public static function listdata(){
 
         $db = new DBconnect();

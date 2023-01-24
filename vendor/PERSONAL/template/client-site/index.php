@@ -34,7 +34,7 @@
                                 echo "<img src='./vendor/PERSONAL/template/adm-site/uploaded-files/".$product[$key]['imgproduct']."' alt='imagem do produto'>";
                                 echo "<div class='product-hover'>";
                                 echo "<a href='#' class='add-to-cart-link'><i class='fa fa-shopping-cart'></i> Adicionar ao Carrinho</a>";
-                                echo "<a href='#' class='view-details-link'><i class='fa fa-link'></i> Ver Detalhes</a>";
+                                echo "<a href='http://localhost/ecommerce/product/".$product[$key]['desurl']."' class='view-details-link'><i class='fa fa-link'></i> Ver Detalhes</a>";
                                 echo "</div>";
                                 echo "</div>";                                    
                                 echo "<h2><a href='http://localhost/ecommerce/products/".$product[$key]['desurl']."'>".$product[$key]['desproduct']."</a></h2>";

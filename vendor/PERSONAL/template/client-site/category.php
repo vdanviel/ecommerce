@@ -27,7 +27,7 @@
                 echo $productscategory[$key]['imgproduct']." alt='product-image' ";
                 echo ">";
                 echo '<div class="product-info">';
-                echo '<h2><a href="">'.$productscategory[$key]['desproduct'].'</a></h2>';
+                echo '<h2><a href="http://localhost/ecommerce/product/'.$productscategory[$key]['desurl'].'">'.$productscategory[$key]['desproduct'].'</a></h2>';
                 echo '<div class="product-carousel-price">';
                 echo '<ins>R$';
                 echo $visual->formatprice($productscategory[$key]['vlprice']);

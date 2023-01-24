@@ -3,6 +3,7 @@
 use PERSONAL\Category;
 use \PERSONAL\TEMPLATE\Visual;
 use \PERSONAL\Product;
+
 $category_header = Category::listdata();
 ?>
 <!DOCTYPE html>

@@ -33,44 +33,61 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="cart_item">
-                                            <td class="product-remove">
-                                                <a title="Remove this item" class="remove" href="#">×</a> 
-                                            </td>
 
-                                            <td class="product-thumbnail">
-                                                <a href="./vendor/PERSONAL/template/client-site/produto-detalhe.php"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="./vendor/PERSONAL/template/client-site/img/product-thumb-2.jpg"></a>
-                                            </td>
+                                        <?php
 
-                                            <td class="product-name">
-                                                <a href="./vendor/PERSONAL/template/client-site/produto-detalhe.php">Ship Your Idea</a> 
-                                            </td>
+                                            foreach ($cart_products as $key => $value) {
+                                                
+                                            echo '<tr class="cart_item">';
+                                            echo '<td class="product-remove">';
+                                            echo '<a title="Remove this item" class="remove" href="http://localhost/ecommerce/carrinho/'.$cart_products[$key]['idproduct'].'/remove">X</a>';
+                                            echo '</td>';
 
-                                            <td class="product-price">
-                                                <span class="amount">R$15.00</span> 
-                                            </td>
+                                            echo '<td class="product-thumbnail">';
+                                            echo '<a href="http://localhost/ecommerce/product/'.$cart_products[$key]['desurl'].'"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="'.$visual->levelTheRoute().'./vendor/PERSONAL/template/adm-site/uploaded-files/'.$cart_products[$key]['imgproduct'].'"></a>';
+                                            echo '</td>';
 
-                                            <td class="product-quantity">
-                                                <div class="quantity buttons_added">
-                                                    <input type="button" class="minus" value="-">
-                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
-                                                    <input type="button" class="plus" value="+">
-                                                </div>
-                                            </td>
+                                            echo '<td class="product-name">';
+                                            echo '<a href="http://localhost/ecommerce/product/'.$cart_products[$key]['desurl'].'">'.$cart_products[$key]['desproduct'].'</a> ';
+                                            echo '</td>';
 
-                                            <td class="product-subtotal">
-                                                <span class="amount">R$15.00</span> 
-                                            </td>
-                                        </tr>
+                                            echo '<td class="product-price">';
+                                            echo '<span class="amount">R$'.$visual->formatprice($cart_products[$key]['vlprice']).'</span> ';
+                                            echo '</td>';
+
+                                            echo '<td class="product-quantity">';
+                                            echo '<div class="quantity buttons_added">';
+                                            echo '<input type="button" class="minus" value="-" onclick="window.location.href=';
+                                            echo "'http://localhost/ecommerce/carrinho/".$cart_products[$key]['idproduct']."";
+                                            echo "/remove'";
+                                            echo '">';
+                                            echo '<input type="number" inputmode="numeric" size="4" class="input-text qty text" title="Qty" value="'.$cart_products[$key]['nrqtd'].'" min="0" step="1">';
+                                            echo '<input type="button" class="plus" value="+" onclick="window.location.href=';
+                                            echo "'http://localhost/ecommerce/carrinho/".$cart_products[$key]['idproduct']."";
+                                            echo "/add'";
+                                            echo '">';
+                                            echo '</div>';
+                                            echo '</td>';
+
+                                            echo '<td class="product-subtotal">';
+                                            echo '<span class="amount">R$'.$visual->formatprice($cart_products[$key]['vltotal']).'</span> ';
+                                            echo '</td>';
+                                            echo '</tr>';
+                                        
+                                            }
+                                        ?>
+
                                         <tr>
                                             <td class="actions" colspan="6">
                                                 <div class="coupon">
-                                                    <label for="coupon_code">Cupom:</label>
-                                                    <input type="text" placeholder="Coupon code" value="" id="coupon_code" class="input-text" name="coupon_code">
-                                                    <input type="submit" value="Aplicar" name="apply_coupon" class="button">
+                                                <label for="coupon_code">Cupom:</label>
+                                                <input type="text" placeholder="Coupon code" value="" id="coupon_code" class="input-text" name="coupon_code">
+                                                <input type="submit" value="Aplicar" name="apply_coupon" class="button">
                                                 </div>
                                             </td>
                                         </tr>
+
+
                                     </tbody>
                                 </table>
                             </form>

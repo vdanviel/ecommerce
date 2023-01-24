@@ -37,7 +37,7 @@
                 echo '</div>';
                
                 echo '<div class="product-option-shop">';
-                echo '<a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Adicionar ao Carrinho</a>';
+                echo '<a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="http://localhost/ecommerce/carrinho/'.$productscategory[$key]['idproduct'].'/add">Adicionar ao Carrinho</a>';
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';

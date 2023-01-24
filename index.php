@@ -77,11 +77,58 @@ $app->get('/category/:id/:page', function($id,$page){
 
 $app->get('/carrinho', function () {
 
+	$visual = new Visual();
+
 	$cart = Cart::getcartfromsession();
+
+	$cart_products = $cart->listcartproducts();
 
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/carrinho.php");
 	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+});
+
+$app->get('/carrinho/:idproduct/add', function ($id) {
+
+	$product = new Product();
+
+	$product_result = $product->findoneproduct($id);
+
+	$cart = Cart::getcartfromsession();
+
+	$cart->addproduct($product_result);
+
+	header('location:http://localhost/ecommerce/carrinho');
+	exit;
+});
+
+
+$app->get('/carrinho/:idproduct/remove', function ($id) {
+
+	$product = new Product();
+
+	$product_result = $product->findoneproduct($id);
+
+	$cart = Cart::getcartfromsession();
+
+	$cart->removeproduct($product_result);
+
+	header('location:http://localhost/ecommerce/carrinho');
+	exit;
+});
+
+$app->get('/carrinho/:idproduct/removeall', function ($id) {
+
+	$product = new Product();
+
+	$product_result = $product->findoneproduct($id);
+
+	$cart = Cart::getcartfromsession();
+
+	$cart->removeproduct($product_result, true);
+
+	header('location:http://localhost/ecommerce/carrinho');
+	exit;
 });
 
 $app->get('/esqueci-a-senha', function () {

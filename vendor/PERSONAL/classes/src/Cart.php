@@ -61,6 +61,8 @@ class Cart extends Model
 
         }
 
+        return $obj_cart;
+
     }
 
     public function setsession(){
@@ -99,11 +101,13 @@ class Cart extends Model
 
         $db = new DBconnect();
 
-        $db->queryCommand("INSERT INTO tb_cartsproducts(idcart, idproduct) VALUES (:idcart,:idprodcut)", array(
+        $db->queryCommand("INSERT INTO tb_cartsproducts (idcart, idproduct) VALUES(:idcart, :idproduct)", array(
             ":idcart" => $this->getidcart(),
-            ":idproduct" => $this->getidproduct()
+            ":idproduct" => $product[0]['idproduct']
         ));
 
+
+        
     }
 
     public function removeproduct($product, $all = false){
@@ -113,14 +117,14 @@ class Cart extends Model
             
             $db->queryCommand("UPDATE tb_cartsproducts SET dtremoved = NOW() WHERE idcart = :idcart AND idproduct = :idproduct AND dtremoved IS NULL", [
                 ':idcart'=>$this->getidcart(),
-                ':idproduct'=>$product->getidproduct()
+                ':idproduct'=>$product[0]['idproduct']
             ]);
 
         }else{
 
             $db->queryCommand("UPDATE tb_cartsproducts SET dtremoved = NOW() WHERE idcart = :idcart AND idproduct = :idproduct AND dtremoved IS NULL LIMIT 1", [
                 ':idcart'=>$this->getidcart(),
-                ':idproduct'=>$product->getidproduct()
+                ':idproduct'=>$product[0]['idproduct']
             ]);
 
         }
@@ -128,5 +132,12 @@ class Cart extends Model
 
     }
 
+    public function listcartproducts(){
+        $db = new DBconnect();
+
+        return $db->select("SELECT b.idproduct, b.desproduct , b.vlprice, b.vlwidth, b.vlheight, b.vllength, b.vlweight, b.desurl, b.imgproduct, COUNT(*) AS nrqtd, SUM(b.vlprice) AS vltotal FROM tb_cartsproducts a INNER JOIN tb_products b ON a.idproduct = b.idproduct WHERE a.idcart = :idcart AND a.dtremoved IS NULL GROUP BY b.idproduct, b.desproduct , b.vlprice, b.vlwidth, b.vlheight, b.vllength, b.vlweight, b.desurl, b.imgproduct ORDER BY b.desproduct", array(
+            ":idcart" => $this->getidcart()
+        ));
+    }
 
     }

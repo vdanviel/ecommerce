@@ -3,8 +3,10 @@
 use PERSONAL\Category;
 use \PERSONAL\TEMPLATE\Visual;
 use \PERSONAL\Product;
+use \PERSONAL\USER\User as User;
 
 $category_header = Category::listdata();
+$session_user = User::sessionuser();
 ?>
 <!DOCTYPE html>
 
@@ -42,10 +44,10 @@ $category_header = Category::listdata();
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Minha Conta</a></li>
+                            <?= User::verifylogin(false) == true ? '<li><a href="http://localhost/ecommerce/account"><i class="fa fa-user"></i>'.utf8_decode($session_user->getdeslogin()).'</a></li>' : '<li><a href="http://localhost/ecommerce/login"><i class="fa fa-lock"></i> Login</a></li>'?>     
                             <li><a href="#"><i class="fa fa-heart"></i> Lista de Desejos</a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i> Meu Carrinho</a></li>
-                            <li><a href="#"><i class="fa fa-lock"></i> Login</a></li>
+                            <li><a href="http://localhost/ecommerce/carrinho"><i class="fa fa-shopping-cart"></i> Meu Carrinho</a></li>
+                            <?= User::verifylogin(false) == true ? '<li><a href="http://localhost/ecommerce/logout"><i class="fa fa-close"></i> Sair</a></li>' : ''?>
                         </ul>
                     </div>
                 </div>

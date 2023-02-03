@@ -47,13 +47,7 @@ class Visual
 
     public static function formatprice($price){
 
-        if (strpos($price,".") == false) {
-            
-            echo "the price is alredy written in the right format.";
-            
-        }else{
             echo str_replace(".",",",$price);
-        }
 
     }
 }

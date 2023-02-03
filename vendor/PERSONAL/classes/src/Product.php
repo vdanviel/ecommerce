@@ -146,7 +146,7 @@ class Product extends Model{
         }
 
         #excluir o registro
-        $db->queryCommand("DELETE FROM tb_products WHERE idproduct = :id",
+        $db->queryCommand("SET FOREIGN_KEY_CHECKS = 0; DELETE FROM tb_products WHERE idproduct = :id",
         array(
             ":id" => $id
         ));

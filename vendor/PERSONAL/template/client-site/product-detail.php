@@ -40,11 +40,11 @@ use PERSONAL\TEMPLATE\Visual;
                                     <ins><?=Visual::formatprice($productdetail[0]['vlprice'])?></ins>
                                 </div>    
                                 
-                                <form action="" class="cart">
+                                <form action="http://localhost/ecommerce/carrinho/<?=$productdetail[0]['idproduct']?>/add" class="cart">
                                     <div class="quantity">
                                         <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="qnt" min="1" step="1">
                                     </div>
-                                    <button class="add_to_cart_button" type="submit">Add to cart</button>
+                                    <button class="add_to_cart_button" type="submit">Adicionar ao Carrinho</button>
                                 </form>
                                 
                                 <div class="product-inner-category">

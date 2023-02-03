@@ -10,6 +10,7 @@ class User extends Model
 {
 
     const SESSION = "user";
+    const SESSION_ERROR = "true";
 
     public static function sessionuser(){
         $obj_user = new User();
@@ -62,8 +63,7 @@ class User extends Model
         ));
 
         if (count($resultlogin) == 0) {
-            echo ("Usuário inexistente ou senha inválida.<br>");
-
+            //usuario não existe ou sneha inválida
             return false;
         }
 
@@ -84,7 +84,7 @@ class User extends Model
         }
     }
 
-    public static function verifylogintemplate($inadmin = 1){
+    public static function verifylogintemplate($isclient = false, $inadmin = 1){
         if (
             empty($_SESSION[User::SESSION])
             ||
@@ -94,11 +94,17 @@ class User extends Model
             ||
             $_SESSION[User::SESSION]["inadmin"] == !$inadmin
         ) {
-            header("Location: http://localhost/ecommerce/admin/login");
-            exit;
-            return "Usuário sem login ativo.";
+            if ($isclient == false) {
+                header("Location: http://localhost/ecommerce/admin/login");
+                exit;
+                return false;
+            }elseif($isclient == true){
+                header("Location: http://localhost/ecommerce/login");
+                exit;
+                return false;
+            }
         } else {
-            return "Usuário com login ativo.";
+            return true;
         }
     }
 
@@ -348,5 +354,25 @@ class User extends Model
         array(
             ":id" => $id
         ));
+    }
+
+    public static function seterror($errormsg){
+
+        $_SESSION[User::SESSION_ERROR] = $errormsg;
+
+    }
+
+    public static function geterror(){
+
+        return isset($_SESSION[User::SESSION_ERROR]) ? $_SESSION[User::SESSION_ERROR] : "";
+
+        User::cleanerror();
+
+    }
+
+    public static function cleanerror(){
+
+        $_SESSION[User::SESSION_ERROR] = NULL;
+
     }
 }

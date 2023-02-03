@@ -2,6 +2,7 @@
 session_start();
 require_once("vendor/autoload.php");
 
+use PERSONAL\Address;
 use PERSONAL\Category;
 use PERSONAL\Product;
 use PERSONAL\Cart;
@@ -24,6 +25,42 @@ $app->get('/', function () {
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/index.php");
 	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+});
+
+$app->get('/login', function () {
+
+	$user= new User();
+
+	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/login.php");
+	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+});
+
+$app->post('/login', function () {
+
+	$user= new User();
+
+	try{
+	User::login($_POST['login'], $_POST['password']);
+	User::cleanerror();
+
+	header('location: http://localhost/ecommerce/');
+	exit;
+	}catch(Exception $e){
+
+		$error = User::seterror($e->getMessage());
+		require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+		require_once("vendor/PERSONAL/template/client-site/login.php");
+		require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+	}
+});
+
+$app->get('/logout', function () {
+
+	User::logout();
+
+	header('location: http://localhost/ecommerce/');
+	exit;
 });
 
 $app->get('/lista-produtos/:page', function ($page) {
@@ -81,7 +118,11 @@ $app->get('/carrinho', function () {
 
 	$cart = Cart::getcartfromsession();
 
+	$cart_data = $cart->getdata();
+
 	$cart_products = $cart->listcartproducts();
+
+	$error = Cart::geterror();
 
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/carrinho.php");
@@ -96,7 +137,11 @@ $app->get('/carrinho/:idproduct/add', function ($id) {
 
 	$cart = Cart::getcartfromsession();
 
-	$cart->addproduct($product_result);
+	$qnt = isset($_GET['qnt']) ? intval($_GET['qnt']) : 1;
+
+	for ($i=0; $i < $qnt ; $i++) { 
+		$cart->addproduct($product_result);
+	}
 
 	header('location:http://localhost/ecommerce/carrinho');
 	exit;
@@ -131,18 +176,40 @@ $app->get('/carrinho/:idproduct/removeall', function ($id) {
 	exit;
 });
 
+$app->post('/carrinho/freight', function(){
+
+	$cart = Cart::getcartfromsession();
+
+	$cart->freight($_POST['cep']);
+	
+	header('location: http://localhost/ecommerce/carrinho');
+	exit;
+});
+
+$app->get('/checkout', function(){
+
+	User::verifylogintemplate(true);
+
+	$cart = Cart::getcartfromsession();
+	$cart_data = $cart->getdata();
+
+	$_GET['proceed'] = "sucess";
+	$_GET['zipcode'] = $cart->getdeszipcode();
+
+	$address_data = Address::getcep($_GET['zipcode']);
+
+	var_dump($address_data);
+
+	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/checkout.php");
+	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+});
+
 $app->get('/esqueci-a-senha', function () {
 
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/r-senha.php");
 	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
-});
-
-$app->get('/login', function () {
-
-	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
-	require_once("vendor/PERSONAL/template/client-site/login.php");
-	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php.php");
 });
 
 $app->get('/pagamento', function () {

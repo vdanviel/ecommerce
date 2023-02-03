@@ -10,13 +10,25 @@
             </div>
         </div>
     </div> <!-- End Page title area -->
-    
-    
+
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-                
+            
+            <?php
+            
+                if ($error ==! '') {
+                    
+                echo "<div class='alert alert-danger container' style='margin-bottom: 10px' alert-dismissible>";
+                echo $error;
+                echo "<button class='close' data-dismiss='alert'>&times;</button>";
+                echo "</div>";
+
+                }
+            
+            ?>
+
                 <div class="col-md-12">
                     <div class="product-content-right">
                         <div class="woocommerce">
@@ -36,6 +48,8 @@
 
                                         <?php
 
+                                            $valortotal = 0;
+
                                             foreach ($cart_products as $key => $value) {
                                                 
                                             echo '<tr class="cart_item">';
@@ -52,7 +66,10 @@
                                             echo '</td>';
 
                                             echo '<td class="product-price">';
-                                            echo '<span class="amount">R$'.$visual->formatprice($cart_products[$key]['vlprice']).'</span> ';
+                                            echo '<span class="amount">';
+                                            echo 'R$';
+                                            echo $visual->formatprice($cart_products[$key]["vlprice"]);
+                                            echo '</span>';
                                             echo '</td>';
 
                                             echo '<td class="product-quantity">';
@@ -61,7 +78,7 @@
                                             echo "'http://localhost/ecommerce/carrinho/".$cart_products[$key]['idproduct']."";
                                             echo "/remove'";
                                             echo '">';
-                                            echo '<input type="number" inputmode="numeric" size="4" class="input-text qty text" title="Qty" value="'.$cart_products[$key]['nrqtd'].'" min="0" step="1">';
+                                            echo '<input type="text" size="1" class="input-text qty text" value="'.$cart_products[$key]['nrqtd'].'" min="0" step="1">';
                                             echo '<input type="button" class="plus" value="+" onclick="window.location.href=';
                                             echo "'http://localhost/ecommerce/carrinho/".$cart_products[$key]['idproduct']."";
                                             echo "/add'";
@@ -70,23 +87,15 @@
                                             echo '</td>';
 
                                             echo '<td class="product-subtotal">';
-                                            echo '<span class="amount">R$'.$visual->formatprice($cart_products[$key]['vltotal']).'</span> ';
+                                            echo '<span class="amount">';
+                                            echo 'R$';
+                                            echo $visual->formatprice($cart_products[$key]["vltotal"]);
+                                            echo '</span>';
                                             echo '</td>';
                                             echo '</tr>';
-                                        
+
                                             }
                                         ?>
-
-                                        <tr>
-                                            <td class="actions" colspan="6">
-                                                <div class="coupon">
-                                                <label for="coupon_code">Cupom:</label>
-                                                <input type="text" placeholder="Coupon code" value="" id="coupon_code" class="input-text" name="coupon_code">
-                                                <input type="submit" value="Aplicar" name="apply_coupon" class="button">
-                                                </div>
-                                            </td>
-                                        </tr>
-
 
                                     </tbody>
                                 </table>
@@ -97,14 +106,13 @@
                                 <div class="cross-sells">
 
                                     <h2>Cálculo de Frete</h2>
-                                    <form>
+                                    <form action="http://localhost/ecommerce/carrinho/freight" method="post">
                                         <div class="coupon">
                                             <label for="cep">CEP:</label>
                                             <input type="text" placeholder="00000-000" value="" id="cep" class="input-text" name="cep">
-                                            <input type="submit" value="CÁLCULAR" class="button">
+                                            <input type="submit" value="CALCULAR" class="button">
                                         </div>
                                     </form>
-
                                 </div>
 
 
@@ -115,17 +123,17 @@
                                         <tbody>
                                             <tr class="cart-subtotal">
                                                 <th>Subtotal</th>
-                                                <td><span class="amount">R$15,00</span></td>
+                                                <td><span class="amount">R$<?=$visual->formatprice($cart_data['vlsubtotal'])?></span></td>
                                             </tr>
 
                                             <tr class="shipping">
                                                 <th>Frete</th>
-                                                <td>R$0,00</td>
+                                                <td><?php if(!empty($cart_products)){ echo $cart_data['vlfreight'] !== '' ? $visual->formatprice($cart_data['vlfreight']) : ""; }else{echo "R$0";} ?><br><small><?php if(!empty($cart_products)){$cart_data['nrdays'] > 0 ? "Prazo de: ". $cart_data['nrdays'] ." dias.": ""; }else{echo "";}?></small></td>
                                             </tr>
 
                                             <tr class="order-total">
                                                 <th>Total</th>
-                                                <td><strong><span class="amount">R$15,00</span></strong> </td>
+                                                <td><strong><span class="amount"><?= !empty($cart_products) ? $visual->formatprice($cart_data['vltotal']) : "R$0"?></span></strong> </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -134,7 +142,10 @@
                             </div>
 
                             <div class="pull-right">
-                                <input type="submit" value="Finalizar Compra" name="proceed" class="checkout-button button alt wc-forward">
+                                <form action="http://localhost/ecommerce/checkout" method="get">
+                                    <input type="hidden" name="zipcode">
+                                    <input type="submit" value="Finalizar Compra" name="proceed" class="checkout-button button alt wc-forward">
+                                </form>
                             </div>
 
                         </div>                        

@@ -3,8 +3,7 @@
 
 namespace PERSONAL\TEMPLATE;
 
-class Visual
-{
+class Visual{
 
     public static function levelTheRoute(){#retorna '../' para cada rota acima de 1
         #uri da paginal atual
@@ -47,7 +46,9 @@ class Visual
 
     public static function formatprice($price){
 
-            echo str_replace(".",",",$price);
+        if(!$price > 0) $price = 0;
+        
+        echo str_replace(".",",",$price);
 
     }
 }

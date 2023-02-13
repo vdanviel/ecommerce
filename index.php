@@ -7,6 +7,7 @@ use PERSONAL\Category;
 use PERSONAL\Product;
 use PERSONAL\Cart;
 use PERSONAL\TEMPLATE\Visual;
+use \PERSONAL\PAYMENT\PIX\Payload;
 use \Slim\Slim;
 use \PERSONAL\USER\User;
 use Slim\Exception\NotFoundException;
@@ -28,8 +29,10 @@ $app->get('/', function () {
 });
 
 $app->get('/login', function () {
-
 	$user= new User();
+
+	$errorlogin = $user->logingeterror();
+	$errorregister = $user->registergeterror();
 
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/login.php");
@@ -38,21 +41,101 @@ $app->get('/login', function () {
 
 $app->post('/login', function () {
 
-	$user= new User();
+	if ($_POST['email'] == '' || $_POST['password'] == '') {
+		User::loginseterror("Falha ao entrar. Preencha todos os campos.");
+
+		header('location: http://localhost/ecommerce/login');
+		exit;
+	}
 
 	try{
-	User::login($_POST['login'], $_POST['password']);
-	User::cleanerror();
+		User::login($_POST['email'], $_POST['password']);
 
-	header('location: http://localhost/ecommerce/');
-	exit;
+		header('location: http://localhost/ecommerce/');
+		exit;
+	}catch(Exception $e){
+		User::loginseterror('Falha ao entrar. Dados inválidos.');
+
+		header('location: http://localhost/ecommerce/login');
+		exit;
+	}
+
+});
+
+$app->post('/register', function () {
+
+	if ($_POST['name'] == '' || $_POST['email'] == '' || $_POST['phone'] == '' || $_POST['password'] == '') {
+		User::registerseterror("Falha ao registrar. Preencha todos os campos.");
+		header('location: http://localhost/ecommerce/login');
+		exit;
+	}
+
+	try{
+
+		$userlogin= new User();
+
+		$cryptopassword = password_hash($_POST["password"], PASSWORD_DEFAULT);
+
+		$userlogin->setdata(array(
+			"inadmin" => 0,
+			"desperson" => $_POST['name'],
+			"desemail" => $_POST['email'],
+			"nrphone" => $_POST['phone'],
+			"despassword" =>$cryptopassword
+		));
+
+		$userlogin->registeruser();
+
+		User::login($_POST['email'], $_POST['password']);
+
+		header('location: http://localhost/ecommerce/');
+		exit;
 	}catch(Exception $e){
 
-		$error = User::seterror($e->getMessage());
-		require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
-		require_once("vendor/PERSONAL/template/client-site/login.php");
-		require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+		User::registerseterror('Falha ao cadastrar. Dados inválidos.');
+		header('location: http://localhost/ecommerce/login');
+		exit;
 	}
+});
+
+$app->get('/profile', function(){
+
+	User::verifylogin();
+	
+	$profilesuccess = User::profilegetsuccess();
+	$profileerror = User::profilegeterror();
+
+	$user_session = User::sessionuser();
+	$data = User::findoneuser($user_session->getiduser());
+
+	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/profile.php");
+	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+});
+
+$app->post('/profile', function(){
+
+	if ($_POST['desperson'] == '' || $_POST['desemail'] == '' || $_POST['nrphone'] == '') {
+		User::profileseterror("Erro ao atualizar. Preencha todos os campos.");
+		header('Location: http://localhost/ecommerce/profile');
+		exit;
+	}
+
+	$user_session = User::sessionuser();
+
+	User::verifylogin($user_session->getinadmin() == 1 ? true : false);
+
+	$_POST['inadmin'] = $user_session->getinadmin();
+	$_POST['despassword'] = $user_session->getdespassword();
+
+	$user_session->setdata($_POST);
+	$user_session->edituser($user_session->getiduser());
+
+	$_SESSION['loginsession']['deslogin'] = $_POST['desperson'];
+
+	header('location: http://localhost/ecommerce/profile');
+	User::profilesetsuccess("Usuário alterado com sucesso.");
+	exit;
 });
 
 $app->get('/logout', function () {
@@ -61,6 +144,52 @@ $app->get('/logout', function () {
 
 	header('location: http://localhost/ecommerce/');
 	exit;
+});
+
+$app->get('/forgot', function(){
+	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/forgot.php");
+	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+
+});
+
+$app->post('/forgot', function(){
+	User::emailrecovery($_POST["email"],true);
+
+	header('location: http://localhost/ecommerce/forgot/sent');
+	exit;
+});
+
+$app->get('/forgot/sent', function(){
+
+	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/forgot-sent.php");
+	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+
+});
+
+$app->get('/forgot/reset', function(){
+
+	$user = User::userdecryptforgot($_GET["code"]);
+
+	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/forgot-reset.php");
+	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+
+});
+
+$app->post('/forgot/reset', function(){
+
+	$user = User::userdecryptforgot($_POST["code"]);
+
+	User::setforgotuser($user["idrecovery"]);
+
+	User::changepassword($_POST["password"],$user["iduser"]);
+
+	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/forgot-reset-success.php");
+	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+	
 });
 
 $app->get('/lista-produtos/:page', function ($page) {
@@ -187,22 +316,93 @@ $app->post('/carrinho/freight', function(){
 });
 
 $app->get('/checkout', function(){
+	$visual = new Visual();
+	$address = new Address();
+	$cart = Cart::getcartfromsession();
 
-	User::verifylogintemplate(true);
+	$access = User::verifylogin(false);
+
+	if ($access === false) {
+		header("location: http://localhost/ecommerce/login");
+		exit;
+	}elseif(empty($cart)){
+		header("location: http://localhost/ecommerce/carrinho");
+		exit;
+	}
+
+	if (isset($_GET['zipcode']) && !empty($_GET['zipcode'])) {
+
+		$address->setaddressdata($_GET['zipcode']);
+		$cart->setdeszipcode($_GET['zipcode']);
+		$cart->getcalculatetotal();
+
+		$cart->savecart();
+		
+		$productstotal_qnt = $cart->listcartproducts();
+
+		$address_data = $address->getcep($_GET['zipcode']);
+
+		$addresserror = Address::geterror();
+		require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+		require_once("vendor/PERSONAL/template/client-site/checkout.php");
+		require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+	}else {
+
+		$address_data = $address->getcep($_GET['zipcode']);
+
+		$addresserror = Address::geterror();
+		require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+		require_once("vendor/PERSONAL/template/client-site/checkout.php");
+		require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+	}
+});
+
+$app->post('/checkout', function(){
+
+	if ($_POST['zipcode'] == '' || $_POST['desaddress'] == '' || $_POST['desdistrict'] == '' || $_POST['descity'] == ''|| $_POST['desstate'] == '') {
+		Address::seterror("Erro ao cadastrar endereço. Preencha todos os campos.");
+		header('Location: http://localhost/ecommerce/checkout');
+		exit;
+	}
 
 	$cart = Cart::getcartfromsession();
-	$cart_data = $cart->getdata();
+	$access = User::verifylogin(false);
+	$address = new Address();
+	$user = User::sessionuser();
 
-	$_GET['proceed'] = "sucess";
-	$_GET['zipcode'] = $cart->getdeszipcode();
+	if ($access === false) {
+		header("location: http://localhost/ecommerce/login");
+		exit;
+	}elseif(empty($cart)){
+		header("location: http://localhost/ecommerce/carrinho");
+		exit;
+	}
+	
+	$_POST['deszipcode'] = $_POST['zipcode'];
+	$_POST['idperson'] = $user->getidperson();
 
-	$address_data = Address::getcep($_GET['zipcode']);
+	$address->setdata($_POST);
+	$address->saveaddress();
 
-	var_dump($address_data);
+	header("location: http://localhost/ecommerce/payment");
+	exit;
 
-	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
-	require_once("vendor/PERSONAL/template/client-site/checkout.php");
-	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+});
+
+$app->get('/payment', function(){
+
+	$pix = New Payload();
+
+	$pixdata = $pix->setgetpixkey('11997817780')
+				   ->setgetpixdescription('')
+				   ->setgetpixmerchantname('VICTOR DANIEL')
+				   ->setgetpixmerchantcity('SAO PAULO')
+				   ->setgetpixvalue('12.33')
+				   ->setgetpixid('1172D');
+
+	echo $pix->getpayloadcode();
+	echo "<br>";
+	echo $pix->getpayloadqrcode();
 });
 
 $app->get('/esqueci-a-senha', function () {

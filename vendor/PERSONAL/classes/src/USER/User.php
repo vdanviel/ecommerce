@@ -9,8 +9,12 @@ use PERSONAL\Model;
 class User extends Model
 {
 
-    const SESSION = "user";
-    const SESSION_ERROR = "true";
+    const SESSION = 'loginsession';
+    const SESSION_ERROR_LOGIN = 'errorlogin';
+    const SESSION_ERROR_REGISTER = 'errorregister';
+    const SESSION_SUCCESS_PROFILE = 'errorprofile';
+    const SESSION_ERROR_PROFILE = 'successprofile';
+    private const SESSION_PASSWORD = 'password';
 
     public static function sessionuser(){
         $obj_user = new User();
@@ -64,6 +68,8 @@ class User extends Model
 
         if (count($resultlogin) == 0) {
             //usuario não existe ou sneha inválida
+            throw new \Exception("Usuário inexistente ou senha inválida.<br>");
+
             return false;
         }
 
@@ -108,7 +114,7 @@ class User extends Model
         }
     }
 
-    public static function emailrecovery($email){
+    public static function emailrecovery($email, $isclient = false){
 
     #PROCESSO DE ENVIO DE EMAIL
 	$db = new DBconnect();
@@ -140,11 +146,11 @@ class User extends Model
 
 			$inadmin = $userinfo['inadmin'];
 			
-			if ($inadmin === 1) {
+			if ($inadmin == 1 && $isclient == false) {
 
 				$link = "http://localhost/ecommerce/admin/forgot/reset?code=$code";
 
-			} else {
+			} elseif($isclient == true) {
 
 				$link = "http://localhost/ecommerce/forgot/reset?code=$code";
 				
@@ -243,7 +249,7 @@ class User extends Model
 
     }
 
-    public static function  userdecryptforgot($code){
+    public static function userdecryptforgot($code){
         
         $idrecovery = openssl_decrypt(base64_decode($code), 'AES-128-CBC', pack("a16", "Stufesp2051"), 0, pack ("a16", "EcommerceStufeSp"));
 
@@ -309,7 +315,9 @@ class User extends Model
 
         $db = new DBconnect();
 
-        return $db->select("SELECT * FROM tb_users INNER JOIN tb_persons USING(idperson) WHERE desemail = $email ORDER BY tb_persons.desperson");
+        return $db->select("SELECT * FROM tb_users u INNER JOIN tb_persons p ON u.idperson = p.idperson WHERE p.desemail = :email ORDER BY p.desperson",array(
+            ":email" => $email
+        ));
 
     }
 
@@ -319,7 +327,7 @@ class User extends Model
         $result = $db->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)",
         array(
             ":desperson" => $this->getdesperson(),
-            ":deslogin" => strtoupper($this->getdesperson()),
+            ":deslogin" => utf8_encode(ucwords($this->getdesperson())),
             ":despassword" => $this->getdespassword(),
             ":desemail" => $this->getdesemail(),
             ":nrphone" => $this->getnrphone(),
@@ -336,7 +344,7 @@ class User extends Model
         array(
             ":iduser" => $id,
             ":desperson" => $this->getdesperson(),
-            ":deslogin" => strtoupper($this->getdesperson()),
+            ":deslogin" => ucwords($this->getdesperson()),
             ":despassword" => $this->getdespassword(),
             ":desemail" => $this->getdesemail(),
             ":nrphone" => $this->getnrphone(),
@@ -356,23 +364,92 @@ class User extends Model
         ));
     }
 
-    public static function seterror($errormsg){
+    public static function profilesetsuccess($successmsg){
 
-        $_SESSION[User::SESSION_ERROR] = $errormsg;
-
-    }
-
-    public static function geterror(){
-
-        return isset($_SESSION[User::SESSION_ERROR]) ? $_SESSION[User::SESSION_ERROR] : "";
-
-        User::cleanerror();
+        $_SESSION[User::SESSION_SUCCESS_PROFILE] = $successmsg;
 
     }
 
-    public static function cleanerror(){
+    public static function profilegetsuccess(){
 
-        $_SESSION[User::SESSION_ERROR] = NULL;
+        $item = isset($_SESSION[User::SESSION_SUCCESS_PROFILE]) ? $_SESSION[User::SESSION_SUCCESS_PROFILE] : "";
+
+        User::profilecleansuccess();
+
+        return $item;
 
     }
+
+    public static function profilecleansuccess(){
+
+        $_SESSION[User::SESSION_SUCCESS_PROFILE] = NULL;
+
+    }
+
+    public static function profileseterror($errormsg){
+
+        $_SESSION[User::SESSION_ERROR_PROFILE] = $errormsg;
+
+    }
+
+    public static function profilegeterror(){
+
+        $item = isset($_SESSION[User::SESSION_ERROR_PROFILE]) ? $_SESSION[User::SESSION_ERROR_PROFILE] : "";
+
+        User::profilecleanerror();
+
+        return $item;
+
+    }
+
+    public static function profilecleanerror(){
+
+        $_SESSION[User::SESSION_ERROR_PROFILE] = NULL;
+
+    }
+
+    public static function loginseterror($errormsg){
+
+        $_SESSION[User::SESSION_ERROR_LOGIN] = $errormsg;
+
+    }
+
+    public static function logingeterror(){
+
+        $item = isset($_SESSION[User::SESSION_ERROR_LOGIN]) ? $_SESSION[User::SESSION_ERROR_LOGIN] : "";
+
+        User::logincleanerror();
+
+        return $item;
+
+    }
+
+    public static function logincleanerror(){
+
+        $_SESSION[User::SESSION_ERROR_LOGIN] = NULL;
+
+    }
+
+    public static function registerseterror($errormsg){
+
+        $_SESSION[User::SESSION_ERROR_REGISTER] = $errormsg;
+
+    }
+
+    public static function registergeterror(){
+
+        $item = isset($_SESSION[User::SESSION_ERROR_REGISTER]) ? $_SESSION[User::SESSION_ERROR_REGISTER] : "";
+
+        User::registercleanerror();
+
+        return $item;
+
+    }
+
+    public static function registercleanerror(){
+
+        $_SESSION[User::SESSION_ERROR_REGISTER] = NULL;
+
+    }
+    
 }

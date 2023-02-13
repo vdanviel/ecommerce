@@ -18,7 +18,7 @@
             
             <?php
             
-                if ($error ==! '') {
+                if (isset($error) && $error ==! '') {
                     
                 echo "<div class='alert alert-danger container' style='margin-bottom: 10px' alert-dismissible>";
                 echo $error;
@@ -36,19 +36,25 @@
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
-                                            <th class="product-remove">&nbsp;</th>
-                                            <th class="product-thumbnail">&nbsp;</th>
-                                            <th class="product-name">Produto</th>
-                                            <th class="product-price">Preço</th>
-                                            <th class="product-quantity">Quantidade</th>
-                                            <th class="product-subtotal">Total</th>
+                                            <?php
+                                                if (empty($cart_products)) {
+                                                    echo '<h3><br>Não há produtos no carrinho.<br><h3>';
+                                                }else{
+                                                    echo '<th class="product-remove">&nbsp;</th>';
+                                                    echo '<th class="product-thumbnail">&nbsp;</th>';
+                                                    echo '<th class="product-name">Produto</th>';
+                                                    echo '<th class="product-price">Preço</th>';
+                                                    echo '<th class="product-quantity">Quantidade</th>';
+                                                    echo '<th class="product-subtotal">Total</th>';
+                                                }
+                                            ?>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         <?php
 
-                                            $valortotal = 0;
+                                            $valortotal = 0;                                            
 
                                             foreach ($cart_products as $key => $value) {
                                                 
@@ -143,7 +149,7 @@
 
                             <div class="pull-right">
                                 <form action="http://localhost/ecommerce/checkout" method="get">
-                                    <input type="hidden" name="zipcode">
+                                    <input type="hidden" name="zipcode" value="<?=isset($cart_data['deszipcode']) ? $cart_data['deszipcode'] : ""?>">
                                     <input type="submit" value="Finalizar Compra" name="proceed" class="checkout-button button alt wc-forward">
                                 </form>
                             </div>

@@ -1,12 +1,16 @@
 <?php require_once("vendor/autoload.php");
 
 use PERSONAL\Category;
+use PERSONAL\Cart;
 use \PERSONAL\TEMPLATE\Visual;
 use \PERSONAL\Product;
 use \PERSONAL\USER\User as User;
 
 $category_header = Category::listdata();
-$session_user = User::sessionuser();
+
+$texts = array("Deseja realmente sair?");
+$user_session = User::sessionuser() !== null ? User::sessionuser() : "";
+
 ?>
 <!DOCTYPE html>
 
@@ -44,10 +48,10 @@ $session_user = User::sessionuser();
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <?= User::verifylogin(false) == true ? '<li><a href="http://localhost/ecommerce/account"><i class="fa fa-user"></i>'.utf8_decode($session_user->getdeslogin()).'</a></li>' : '<li><a href="http://localhost/ecommerce/login"><i class="fa fa-lock"></i> Login</a></li>'?>     
+                            <?= User::verifylogin(false) == true ? '<li><a href="http://localhost/ecommerce/profile"><i class="fa fa-user"></i>'.ucwords(utf8_decode($user_session->getdeslogin())).'</a></li>' : '<li><a href="http://localhost/ecommerce/login"><i class="fa fa-lock"></i> Login</a></li>'?>     
                             <li><a href="#"><i class="fa fa-heart"></i> Lista de Desejos</a></li>
                             <li><a href="http://localhost/ecommerce/carrinho"><i class="fa fa-shopping-cart"></i> Meu Carrinho</a></li>
-                            <?= User::verifylogin(false) == true ? '<li><a href="http://localhost/ecommerce/logout"><i class="fa fa-close"></i> Sair</a></li>' : ''?>
+                            <?= User::verifylogin(false) == true ? '<li><a href="http://localhost/ecommerce/logout" onclick="return confirm(`Deseja realmente sair?`)"><i class="fa fa-close"></i> Sair</a></li>' : ''?>
                         </ul>
                     </div>
                 </div>

@@ -38,4 +38,3 @@ function button_next_off(){
     btn.style.display = "none"
 
 }
-

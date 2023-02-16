@@ -45,7 +45,7 @@
 										<p id="billing_address_1_field" class="form-row form-row-wide address-field validate-required">
 											<label class="" for="billing_address_1">Endereço
 											</label>
-											<input type="text" value="<?=$address_data ==! null ? $address_data['logradouro'] : ""?>" placeholder="Logradouro, número e bairro" id="billing_address_1" name="desaddress" class="input-text ">
+											<input type="text" value="<?=$address_data ==! null ? $address_data['logradouro'].", ".$address_data['gia'] : ""?>" placeholder="Logradouro, número e bairro" id="billing_address_1" name="desaddress" class="input-text ">
 										</p>
 										<p id="billing_address_2_field" class="form-row form-row-wide address-field">
 											<label class="" for="billing_address_2">Complemento
@@ -84,7 +84,7 @@
                                                     
 													<tr class="cart_item">
 														<td class="product-name">
-															<?php if(count($productstotal_qnt) > 2){echo $productstotal_qnt[0]['desproduct'].", ".$productstotal_qnt[1]['desproduct']." [...]";}else{echo $productstotal_qnt[0]['desproduct']." [...]";}?> <strong class="product-quantity">x <?=intval(count($productstotal_qnt))?></strong> 
+															<?php if(count($productstotal_qnt) > 1){echo $productstotal_qnt[0]['desproduct'].", ".$productstotal_qnt[1]['desproduct']." [...]";}else{echo $productstotal_qnt[0]['desproduct'];}?> <strong class="product-quantity">x <?=intval(count($productstotal_qnt))?></strong> 
 														</td>
 														<td class="product-total">
 															<span class="amount"><?=$visual->formatprice($cart->getvlsubtotal())?></span>

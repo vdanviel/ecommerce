@@ -33,7 +33,7 @@ class User extends Model
         if (
         empty($_SESSION[User::SESSION])
         ||
-        !$_SESSION[User::SESSION]
+        !isset($_SESSION[User::SESSION])
         ||
         empty($_SESSION[User::SESSION]["iduser"])
         ){
@@ -42,11 +42,11 @@ class User extends Model
 
         }else{
 
-            if ($inadmin === true && $_SESSION[User::SESSION]['inadmin'] === true ) {
+            if ($inadmin == true && $_SESSION[User::SESSION]['inadmin'] == 1) {
                 
                 return true;
 
-            } else if ($inadmin === false) {
+            } else if ($inadmin == false) {
 
                 return true;
 

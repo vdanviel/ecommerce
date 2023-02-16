@@ -6,6 +6,8 @@ use PERSONAL\Address;
 use PERSONAL\Category;
 use PERSONAL\Product;
 use PERSONAL\Cart;
+use PERSONAL\ORDER\Order;
+use PERSONAL\ORDER\OrderStatus;
 use PERSONAL\TEMPLATE\Visual;
 use \PERSONAL\PAYMENT\PIX\Payload;
 use \Slim\Slim;
@@ -100,8 +102,8 @@ $app->post('/register', function () {
 
 $app->get('/profile', function(){
 
-	User::verifylogin();
-	
+	User::verifylogin(false);
+
 	$profilesuccess = User::profilegetsuccess();
 	$profileerror = User::profilegeterror();
 
@@ -131,11 +133,56 @@ $app->post('/profile', function(){
 	$user_session->setdata($_POST);
 	$user_session->edituser($user_session->getiduser());
 
-	$_SESSION['loginsession']['deslogin'] = $_POST['desperson'];
+	$_SESSION[User::SESSION]['deslogin'] = $_POST['desperson'];
 
 	header('location: http://localhost/ecommerce/profile');
 	User::profilesetsuccess("Usuário alterado com sucesso.");
 	exit;
+});
+
+$app->get('/profile/orders', function(){
+
+	$access = User::verifylogin(false);
+
+	if ($access === false) {
+		header("location: http://localhost/ecommerce/login");
+		exit;
+	}
+
+	$order_data = isset($_SESSION['loginsession']) ? (new Order)->listorderuser($_SESSION['loginsession']['iduser']) : null;
+
+	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/profile-orders.php");
+	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+
+});
+
+$app->get('/profile/orders/:order', function($idorder){
+
+	$access = User::verifylogin(false);
+
+	if ($access === false) {
+		header("location: http://localhost/ecommerce/login");
+		exit;
+	}
+
+	$visual = new Visual;
+	$order_data = (new Order)->findoneorder($idorder);
+	$productstotal = (new Cart)->listcartproductsbyid($order_data[0]['idcart']);
+
+	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/profile-orders-detail.php");
+	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+
+});
+
+$app->get('/profile/orders/:order/delete', function($idorder){
+
+	(new Order)->cancelorder($idorder);
+
+	header("location: http://localhost/ecommerce/profile/orders");
+	exit;
+
 });
 
 $app->get('/logout', function () {
@@ -184,7 +231,7 @@ $app->post('/forgot/reset', function(){
 
 	User::setforgotuser($user["idrecovery"]);
 
-	User::changepassword($_POST["password"],$user["iduser"]);
+	User::changepassword($_POST["password"], $user["iduser"]);
 
 	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
 	require_once("vendor/PERSONAL/template/client-site/forgot-reset-success.php");
@@ -366,6 +413,13 @@ $app->post('/checkout', function(){
 	}
 
 	$cart = Cart::getcartfromsession();
+
+	if (!isset($_GET['zipcode'])) {
+
+		$_GET['zipcode'] = $cart->getdeszipcode();
+
+	}
+
 	$access = User::verifylogin(false);
 	$address = new Address();
 	$user = User::sessionuser();
@@ -384,25 +438,110 @@ $app->post('/checkout', function(){
 	$address->setdata($_POST);
 	$address->saveaddress();
 
-	header("location: http://localhost/ecommerce/payment");
+	$order = new Order();
+
+	$cart->getcalculatetotal();
+
+	$order->setdata([
+		'idcart'=>$cart->getidcart(),
+		'idaddress'=>$address->getidaddress(),
+		'iduser'=>$user->getiduser(),
+		'idstatus'=>OrderStatus::EM_ABERTO,
+		'vltotal'=>$cart->getvltotal()
+	]);
+
+	$order->saveorder();
+
+	header("location: http://localhost/ecommerce/order/".$order->getidorder()."");
 	exit;
 
 });
 
-$app->get('/payment', function(){
+$app->get('/order/:idorder', function($idorder){
 
-	$pix = New Payload();
+	$access = User::verifylogin(false);
 
-	$pixdata = $pix->setgetpixkey('11997817780')
-				   ->setgetpixdescription('')
-				   ->setgetpixmerchantname('VICTOR DANIEL')
-				   ->setgetpixmerchantcity('SAO PAULO')
-				   ->setgetpixvalue('12.33')
-				   ->setgetpixid('1172D');
+	if ($access === false) {
+		header("location: http://localhost/ecommerce/login");
+		exit;
+	}
 
-	echo $pix->getpayloadcode();
-	echo "<br>";
-	echo $pix->getpayloadqrcode();
+	$order = new Order();
+
+	$order_data = $order->findoneorder($idorder);
+
+	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/payment.php");
+	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+});
+
+$app->get('/boleto/:idorder', function($idorder){
+
+	$visual = new Visual();
+	$order = new Order();
+
+	$order_data = $order->findoneorder($idorder);
+
+	// DADOS DO BOLETO PARA O SEU CLIENTE
+	$dias_de_prazo_para_pagamento = 10;
+	$taxa_boleto = 5.00;
+	$data_venc = date("d/m/Y", time() + ($dias_de_prazo_para_pagamento * 86400));  // Prazo de X dias OU informe data: "13/04/2006"; 
+	$valor_cobrado = $order_data[0]['vltotal']; // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
+	$valor_cobrado = str_replace(",", ".",$valor_cobrado);
+	$valor_boleto=number_format($valor_cobrado+$taxa_boleto, 2, ',', '');
+
+	$dadosboleto["nosso_numero"] = $order_data[0]['idorder'];  // Nosso numero - REGRA: Máximo de 8 caracteres!
+	$dadosboleto["numero_documento"] = $order_data[0]['vltotal'];	// Num do pedido ou nosso numero
+	$dadosboleto["data_vencimento"] = $data_venc; // Data de Vencimento do Boleto - REGRA: Formato DD/MM/AAAA
+	$dadosboleto["data_documento"] = date("d/m/Y"); // Data de emissão do Boleto
+	$dadosboleto["data_processamento"] = date("d/m/Y"); // Data de processamento do boleto (opcional)
+	$dadosboleto["valor_boleto"] = $valor_boleto; 	// Valor do Boleto - REGRA: Com vírgula e sempre com duas casas depois da virgula
+
+	// DADOS DO SEU CLIENTE
+	$dadosboleto["sacado"] = $order_data[0]['desperson'];
+	$dadosboleto["endereco1"] = $order_data[0]['desaddress']." ".$order_data[0]['desdistrict'];
+	$dadosboleto["endereco2"] = $order_data[0]['descity']." - ".$order_data[0]['desstate']." - ".$order_data[0]['descountry']." CEP: ".$order_data[0]['deszipcode'];
+
+	// INFORMACOES PARA O CLIENTE
+	$dadosboleto["demonstrativo1"] = "Pagamento de Compra na Loja Stufeshop E-commerce";
+	$dadosboleto["demonstrativo2"] = "Taxa bancária - R$ 5,00";
+	$dadosboleto["demonstrativo3"] = "";
+	$dadosboleto["instrucoes1"] = "- Cobra multa de 2% após o vencimento";
+	$dadosboleto["instrucoes2"] = "- Receber até 10 dias após o vencimento";
+	$dadosboleto["instrucoes3"] = "- Em caso de dúvidas entre em contato conosco: stuffshopecommerce@gmail.com";
+	$dadosboleto["instrucoes4"] = "&nbsp; Emitido pelo sistema Projeto Loja Stufeshop E-commerce";
+
+	// DADOS OPCIONAIS DE ACORDO COM O BANCO OU CLIENTE
+	$dadosboleto["quantidade"] = "";
+	$dadosboleto["valor_unitario"] = "";
+	$dadosboleto["aceite"] = "";		
+	$dadosboleto["especie"] = "R$";
+	$dadosboleto["especie_doc"] = "";
+
+
+	// ---------------------- DADOS FIXOS DE CONFIGURAÇÃO DO SEU BOLETO --------------- //
+
+
+	// DADOS DA SUA CONTA - ITAÚ
+	$dadosboleto["agencia"] = "1690"; // Num da agencia, sem digito
+	$dadosboleto["conta"] = "48781";	// Num da conta, sem digito
+	$dadosboleto["conta_dv"] = "2"; 	// Digito do Num da conta
+
+	// DADOS PERSONALIZADOS - ITAÚ
+	$dadosboleto["carteira"] = "175";  // Código da Carteira: pode ser 175, 174, 104, 109, 178, ou 157
+
+	// SEUS DADOS
+	$dadosboleto["identificacao"] = "Stufeshop E-commerce";
+	$dadosboleto["cpf_cnpj"] = "24.700.731/0001-08";
+	$dadosboleto["endereco"] = "Rua Ademar Saraiva Leão, 234 - Alvarenga, 09853-120";
+	$dadosboleto["cidade_uf"] = "São Bernardo do Campo - SP";
+	$dadosboleto["cedente"] = "STUFESHOP LTDA - ME";
+
+
+	$path = './vendor/boletophp/include/';
+	require_once($path."funcoes_itau.php"); 
+	require_once($path."layout_itau.php");
+
 });
 
 $app->get('/esqueci-a-senha', function () {

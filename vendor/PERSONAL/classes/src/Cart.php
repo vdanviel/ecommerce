@@ -143,6 +143,14 @@ class Cart extends Model
         ));
     }
 
+    public function listcartproductsbyid($idcart){
+        $db = new DBconnect();
+
+        return $db->select("SELECT b.idproduct, b.desproduct , b.vlprice, b.vlwidth, b.vlheight, b.vllength, b.vlweight, b.desurl, b.imgproduct, COUNT(*) AS nrqtd, SUM(b.vlprice) AS vltotal FROM tb_cartsproducts a INNER JOIN tb_products b ON a.idproduct = b.idproduct WHERE a.idcart = :idcart AND a.dtremoved IS NULL GROUP BY b.idproduct, b.desproduct , b.vlprice, b.vlwidth, b.vlheight, b.vllength, b.vlweight, b.desurl, b.imgproduct ORDER BY b.desproduct", array(
+            ":idcart" => $idcart
+        ));
+    }
+
     public function listcartproductstotal(){
         $db = new DBconnect();
 
@@ -153,7 +161,22 @@ class Cart extends Model
         if (count($result) > 0) {
             return $result[0];
         }else {
-            return "This cart has been erased in the database.";
+            return false;
+        }
+
+    }
+
+    public function listcartproductstotalbyid($idcart){
+        $db = new DBconnect();
+
+        $result = $db->select("SELECT SUM(vlprice) AS vlprice, SUM(vlwidth) AS vlwidth, SUM(vlheight) AS vlheight, SUM(vllength) AS vllength, SUM(vlweight) AS vlweight, COUNT(*) AS totalproducts FROM tb_products a INNER JOIN tb_cartsproducts b ON a.idproduct = b.idproduct WHERE b.idcart = :idcart AND dtremoved IS NULL;", array(
+            ":idcart" => $idcart
+        ));
+
+        if (count($result) > 0) {
+            return $result[0];
+        }else {
+            return false;
         }
 
     }
@@ -285,7 +308,7 @@ class Cart extends Model
 		$total = $this->listcartproductstotal();
 
 		$this->setvlsubtotal($total['vlprice']);
-		$this->setvltotal($total['vlprice'] + (float)$this->getvlfreight()); 
+		$this->setvltotal($total['vlprice'] + (float)$this->getvlfreight());
 
 	}
 

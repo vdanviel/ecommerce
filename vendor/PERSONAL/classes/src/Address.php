@@ -49,21 +49,23 @@ public function setaddressdata($cep){
 
 	public function saveaddress(){
 
-		$sql = new DBconnect();
-	
-		$result = $sql->select("CALL sp_addresses_save(:idaddress, :idperson, :desaddress, :descomplement, :descity, :desstate, :descountry, :deszipcode, :desdistrict)", array(
-			":idaddress" => $this->getidaddress(),
-			":idperson" => $this->getidperson(),
-			":desaddress" => $this->getdesaddress(),
-			":descomplement" => $this->getdescomplement(),
-			":descity" => $this->getdescity(),
-			":desstate" => $this->getdesaddress(),
-			":descountry" => $this->getdescountry(),
-			":deszipcode" => $this->getdeszipcode(),
-			":desdistrict" => $this->getdesdistrict()
-		));
+		$db = new DBconnect();
 
-		return $result;
+		$results = $db->select("CALL sp_addresses_save(:idaddress, :idperson, :desaddress, :desnumber, :descomplement, :descity, :desstate, :descountry, :desdistrict)", [
+			':idaddress'=>$this->getidaddress(),
+			':idperson'=>$this->getidperson(),
+			':desaddress'=>utf8_decode($this->getdesaddress()),
+			':desnumber'=>$this->getdesnumber(),
+			':descomplement'=>utf8_decode($this->getdescomplement()),
+			':descity'=>utf8_decode($this->getdescity()),
+			':desstate'=>utf8_decode($this->getdesstate()),
+			':descountry'=>utf8_decode($this->getdescountry()),
+			':desdistrict'=>$this->getdesdistrict()
+		]);
+
+		if (count($results) > 0) {
+			$this->setdata($results[0]);
+		}
 	
 	}
 

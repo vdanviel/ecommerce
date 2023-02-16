@@ -18,7 +18,7 @@
             
             <?php
             
-                if (isset($error) && $error ==! '') {
+                if (isset($error) && $error ==! '' && !empty($error)) {
                     
                 echo "<div class='alert alert-danger container' style='margin-bottom: 10px' alert-dismissible>";
                 echo $error;

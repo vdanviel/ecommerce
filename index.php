@@ -142,6 +142,7 @@ $app->post('/profile', function(){
 
 $app->get('/profile/orders', function(){
 
+	$visual = new Visual();
 	$access = User::verifylogin(false);
 
 	if ($access === false) {

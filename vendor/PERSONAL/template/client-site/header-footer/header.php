@@ -7,9 +7,11 @@ use \PERSONAL\Product;
 use \PERSONAL\USER\User as User;
 
 $category_header = Category::listdata();
-
-$texts = array("Deseja realmente sair?");
 $user_session = User::sessionuser() !== null ? User::sessionuser() : "";
+
+$cart_session = Cart::getcartfromsession() !== NULL ? Cart::getcartfromsession() : NULL;
+$cart_session = $cart_session->listcartproductstotal();
+
 
 ?>
 <!DOCTYPE html>
@@ -70,7 +72,7 @@ $user_session = User::sessionuser() !== null ? User::sessionuser() : "";
                 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="http://localhost/ecommerce/carrinho">Carrinho - <span class="cart-amunt">R$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="http://localhost/ecommerce/carrinho">Carrinho  <span class="cart-amunt"><?= $cart_session ==! NULL ? Visual::formatprice("- R$".$cart_session["vlprice"]) : "- R$0"?></span> <i class="fa fa-shopping-cart"></i> <span class="product-count"><?= $cart_session ==! NULL ? $cart_session['totalproducts'] : "0"?></span></a>
                     </div>
                 </div>
             </div>

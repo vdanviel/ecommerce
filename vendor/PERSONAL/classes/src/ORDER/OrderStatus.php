@@ -11,6 +11,7 @@ class OrderStatus extends Model{
    const AGUARDANDO = 2;
    const PAGO = 3;
    const ENTREGUE = 4;
+   const CANCELADO = 5;
 
    public static function listdata(){
 

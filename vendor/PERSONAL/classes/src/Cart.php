@@ -10,9 +10,9 @@ use PERSONAL\USER\User as User;
 class Cart extends Model
 {
 
-    const SESSION = true;
-    const SESSION_ERROR = true;
-    const SESSION_CLEAN_POSTALCODE = false;
+    const SESSION = 'sessioncart';
+    const SESSION_ERROR = 'sessioncarterror';
+    const SESSION_CLEAN_POSTALCODE = 'sessioncartcleanpostalcode';
 
     public function savecart(){
 

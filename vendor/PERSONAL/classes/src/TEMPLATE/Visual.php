@@ -51,4 +51,16 @@ class Visual{
         echo str_replace(".",",",$price);
 
     }
+
+    public static function all_array_are_equal($array = array(), $column, $value){
+
+        $data = array_column($array,$column);
+
+        if (count(array_unique($data)) == 1 && array_unique($data)[0] == $value) {
+            return true;//todos os pedidos do user estão cancelados
+        }else{
+            return false;//nem todos os pedidos esão cancelados
+        }
+
+    }
 }

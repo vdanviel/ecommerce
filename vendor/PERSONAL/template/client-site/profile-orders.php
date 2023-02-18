@@ -27,34 +27,43 @@
                     <thead>
                         <tr>
                             <?php
-                                if ($order_data ==! null) {
+                                use PERSONAL\ORDER\OrderStatus;
+
+                                if ($visual->all_array_are_equal($order_data,'desstatus','Cancelado') == true || $order_data == null) {
+
+                                    echo '<h3><b>Nenhum pedido foi encontrado.</b></h3>';                                    
+
+                                }else{
+
                                     echo '<th>#</th>';
                                     echo '<th>Valor Total</th>';
                                     echo '<th>Status</th>';
                                     echo '<th>Endereço</th>';
                                     echo '<th>&nbsp;</th>';
-                                }else{
-                                    echo '<h3><b>Nenhum pedido foi encontrado.</b></h3>';
+                                    
                                 }
                             ?>
                         </tr>
                     </thead>
                     <tbody>                        
                             <?php
-
                                 foreach ($order_data as $key => $value) {
+                                    if ($order_data[$key]['idstatus'] !== OrderStatus::CANCELADO) {
 
-                                    $addresstext = $order_data[$key]['desaddress'].', '.$order_data[$key]['desdistrict'].', '.$order_data[$key]['descity'].' - '.$order_data[$key]['desstate'];
-                                    $addresstext = mb_convert_encoding($addresstext, 'HTML-ENTITIES', 'UTF-8');
-                                    echo '<tr>';
-                                    echo '<th scope="row">'.$order_data[$key]['idorder'].'</th>';
-                                    echo '<td>R$'.$order_data[$key]['vltotal'].'</td>';
-                                    echo '<td>'.$order_data[$key]['desstatus'].'</td>';
-                                    echo '<td>'.$addresstext.'</td>';
-                                    echo '<td><a class="btn btn-success" href="http://localhost/ecommerce/order/'.$order_data[$key]['idorder'].'" role="button">Imprimir Boleto</a></td>';
-                                    echo '<td><a class="btn btn-default" href="http://localhost/ecommerce/profile/orders/'.$order_data[$key]['idorder'].'" role="button">Detalhes</a></td>';
-                                    echo '<td><a class="btn btn-danger" onclick="javascript: return confirm(`Você realmente deseja cancelar esse pedido?`)" href="http://localhost/ecommerce/profile/orders/'.$order_data[$key]['idorder'].'/delete" role="button">Cancelar Pedido <i class="fa fa-close"></i></a></td>';                                    
-                                    echo '</tr>';
+                                        $addresstext = $order_data[$key]['desaddress'].', '.$order_data[$key]['desdistrict'].', '.$order_data[$key]['descity'].' - '.$order_data[$key]['desstate'];
+                                        $addresstext = mb_convert_encoding($addresstext, 'HTML-ENTITIES', 'UTF-8');
+
+                                        echo '<tr>';
+                                        echo '<th scope="row">'.$order_data[$key]['idorder'].'</th>';
+                                        echo '<td>R$'.$order_data[$key]['vltotal'].'</td>';
+                                        echo '<td>'.$order_data[$key]['desstatus'].'</td>';
+                                        echo '<td>'.$addresstext.'</td>';
+                                        echo '<td><a class="btn btn-success" href="http://localhost/ecommerce/order/'.$order_data[$key]['idorder'].'" role="button">Imprimir Boleto</a></td>';
+                                        echo '<td><a class="btn btn-default" href="http://localhost/ecommerce/profile/orders/'.$order_data[$key]['idorder'].'" role="button">Detalhes</a></td>';
+                                        echo '<td><a class="btn btn-danger" onclick="javascript: return confirm(`Você realmente deseja cancelar esse pedido?`)" href="http://localhost/ecommerce/profile/orders/'.$order_data[$key]['idorder'].'/delete" role="button">Cancelar Pedido <i class="fa fa-close"></i></a></td>';                                    
+                                        echo '</tr>';
+
+                                    }
                                     }
                             ?>
                     </tbody>

@@ -2,6 +2,7 @@
 
 namespace PERSONAL\ORDER;
 
+use \PERSONAL\ORDER\OrderStatus;
 use \PERSONAL\DB\DBconnect;
 use \PERSONAL\Model;
 
@@ -60,7 +61,7 @@ class Order extends Model{
     public function cancelorder($idorder){
         $db = new DBconnect();
 
-        $db->queryCommand('DELETE FROM tb_orders WHERE idorder = :idorder',array(
+        $db->queryCommand('UPDATE tb_orders SET idstatus= '.OrderStatus::CANCELADO.' WHERE tb_orders.idorder = :idorder',array(
             ':idorder' => $idorder
         ));
     }

@@ -38,7 +38,8 @@
 
                 }
 
-            ?>            
+            ?>
+                        
                 <form method="post" action="http://localhost/ecommerce/profile">
                     <h3>Alterar Informações</h3>
                     <div class="form-group">
@@ -56,7 +57,7 @@
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
                 <div class="list-group" id="menu">
-                    <a href="#" class="list-group-item list-group-item-action">Alterar Senha</a>
+                    <a href="http://localhost/ecommerce/profile/password/<?=$data[0]['iduser']?>" class="list-group-item list-group-item-action">Alterar Senha</a>
                     <a href="http://localhost/ecommerce/profile/orders" class="list-group-item list-group-item-action">Meus Pedidos</a>
                     <a href="http://localhost/ecommerce/logout" class="list-group-item list-group-item-action">Sair</a>
                 </div>

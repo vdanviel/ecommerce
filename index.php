@@ -186,6 +186,61 @@ $app->get('/profile/orders/:order/delete', function($idorder){
 
 });
 
+$app->get('/profile/password/:iduser', function($iduser){
+
+	$access = User::verifylogin(false);
+
+	if ($access === false) {
+		header("location: http://localhost/ecommerce/login");
+		exit;
+	}
+
+	$passwordsuccess = User::passwordgetsuccess();
+	$passworderror = User::passwordgeterror();
+
+	require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
+	require_once("vendor/PERSONAL/template/client-site/profile-change-password.php");
+	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
+
+});
+
+$app->post('/profile/password/:iduser', function($iduser){
+
+	$access = User::verifylogin(false);
+
+	if ($access === false) {
+		header("location: http://localhost/ecommerce/login");
+		exit;
+	}
+
+	if ($_POST['current_pass'] == '' || $_POST['new_pass'] == '' || $_POST['new_pass_confirm'] == '') {
+		User::passwordseterror("Erro ao atualizar. Preencha todos os campos.");
+		header("Location:  http://localhost/ecommerce/profile/password/$iduser");
+		exit;
+	}
+
+	if (User::checkpassword($iduser,$_POST['current_pass']) == true) {
+		if ($_POST['new_pass'] == $_POST['new_pass_confirm']) {
+			
+			User::changepassword($_POST['new_pass'],$iduser);
+
+			User::passwordsetsuccess('Senha alterada com sucesso!');
+			header("location: http://localhost/ecommerce/profile/password/$iduser");
+			exit;
+
+		}else{
+			User::passwordseterror('A confirmação da senha não confere com a nova senha.');
+			header("location: http://localhost/ecommerce/profile/password/$iduser");
+			exit;
+		}
+	}else {
+		User::passwordseterror('A senha atual é inválida.');
+		header("location: http://localhost/ecommerce/profile/password/$iduser");
+		exit;
+	}
+
+});
+
 $app->get('/logout', function () {
 
 	User::logout();

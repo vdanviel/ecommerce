@@ -14,6 +14,9 @@ class User extends Model
     const SESSION_ERROR_REGISTER = 'errorregister';
     const SESSION_SUCCESS_PROFILE = 'errorprofile';
     const SESSION_ERROR_PROFILE = 'successprofile';
+    const SESSION_ERROR_PASSWORD = 'errorpassword';
+    const SESSION_SUCCESS_PASSWORD = 'successpassword';
+
     private const SESSION_PASSWORD = 'password';
 
     public static function sessionuser(){
@@ -112,6 +115,35 @@ class User extends Model
         } else {
             return true;
         }
+    }
+
+    public static function checkpassword($iduser,$password){
+
+        $db = new DBconnect();
+
+        $dbpassword = $db->select('SELECT despassword FROM tb_users WHERE iduser = :iduser',[
+            ":iduser" => $iduser
+        ]);
+
+        if(password_verify($password,$dbpassword[0]['despassword']) == true){
+            
+            return true;
+
+        }else {
+            return false;
+        }
+
+    }
+
+    public static function changepassword($password, $id){
+
+        $db = new DBconnect();
+
+         $db->queryCommand("UPDATE tb_users SET despassword = :password WHERE iduser = :iduser",array(
+            ":password" => password_hash($password, PASSWORD_DEFAULT),
+            ":iduser" => $id
+        ));
+
     }
 
     public static function emailrecovery($email, $isclient = false){
@@ -278,17 +310,6 @@ class User extends Model
 
     }
 
-    public static function changepassword($password, $id){
-
-        $db = new DBconnect();
-
-         $db->queryCommand("UPDATE tb_users SET despassword = :password WHERE iduser = :iduser",array(
-            ":password" => password_hash($password, PASSWORD_DEFAULT),
-            ":iduser" => $id
-        ));
-
-    }
-
     public static function logout(){
 
         $_SESSION[User::SESSION] = NULL;
@@ -364,6 +385,7 @@ class User extends Model
         ));
     }
 
+    #PROFILE SUCCESS
     public static function profilesetsuccess($successmsg){
 
         $_SESSION[User::SESSION_SUCCESS_PROFILE] = $successmsg;
@@ -386,6 +408,7 @@ class User extends Model
 
     }
 
+    #PROFILE ERRORS
     public static function profileseterror($errormsg){
 
         $_SESSION[User::SESSION_ERROR_PROFILE] = $errormsg;
@@ -408,6 +431,7 @@ class User extends Model
 
     }
 
+    #LOGIN ERRORS
     public static function loginseterror($errormsg){
 
         $_SESSION[User::SESSION_ERROR_LOGIN] = $errormsg;
@@ -430,6 +454,7 @@ class User extends Model
 
     }
 
+    #REGISTER ERRORS
     public static function registerseterror($errormsg){
 
         $_SESSION[User::SESSION_ERROR_REGISTER] = $errormsg;
@@ -452,4 +477,49 @@ class User extends Model
 
     }
     
+    #PROFILE-CHANGE-PASSWORD ERRORS
+    public static function passwordseterror($errormsg){
+
+        $_SESSION[User::SESSION_ERROR_PASSWORD] = $errormsg;
+
+    }
+
+    public static function passwordgeterror(){
+
+        $item = isset($_SESSION[User::SESSION_ERROR_PASSWORD]) ? $_SESSION[User::SESSION_ERROR_PASSWORD] : "";
+
+        User::passwordcleanerror();
+
+        return $item;
+
+    }
+
+    public static function passwordcleanerror(){
+
+        $_SESSION[User::SESSION_ERROR_PASSWORD] = NULL;
+
+    }
+
+    #PROFILE-CHANGE-PASSWORD SUCCESS
+    public static function passwordsetsuccess($errormsg){
+
+        $_SESSION[User::SESSION_SUCCESS_PASSWORD] = $errormsg;
+
+    }
+
+    public static function passwordgetsuccess(){
+
+        $item = isset($_SESSION[User::SESSION_SUCCESS_PASSWORD]) ? $_SESSION[User::SESSION_SUCCESS_PASSWORD] : "";
+
+        User::passwordcleansuccess();
+
+        return $item;
+
+    }
+
+    public static function passwordcleansuccess(){
+
+        $_SESSION[User::SESSION_SUCCESS_PASSWORD] = NULL;
+
+    }
 }

@@ -86,6 +86,16 @@ class Cart extends Model
 
     }
 
+    public function returnfindonecart($id){
+
+        $db = new DBconnect();
+
+        return $db->select("SELECT * FROM tb_carts WHERE idcart = :idcart", array(
+            ":idcart" => $id
+        ));
+        
+    }
+
     public function findonesessioncart(){
 
         $db = new DBconnect();

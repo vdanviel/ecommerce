@@ -245,36 +245,15 @@ desired effect
           </div>
         </div>
 
-        <!-- search form (Optional) -->
-        <form action="#" method="get" class="sidebar-form">
-          <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search...">
-            <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-          </div>
-        </form>
-        <!-- /.search form -->
-
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-          <li class="header">HEADER</li>
+          <li class="header">MENU</li>
           <!-- Optionally, you can add icons to the links -->
           <li class="active"><a href="http://localhost/ecommerce/admin/users"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
           <li class="active"><a href="http://localhost/ecommerce/admin/categories"><i class="fa fa-bookmark"></i> <span>Categorias</span></a></li>
-            <li class="active"><a href="http://localhost/ecommerce/admin/products"><i class="fa fa-shopping-bag"></i> <span>Produtos</span></a></li>
-          <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="#">Link in level 2</a></li>
-              <li><a href="#">Link in level 2</a></li>
-            </ul>
-          </li>
+          <li class="active"><a href="http://localhost/ecommerce/admin/products"><i class="fa fa-shopping-bag"></i> <span>Produtos</span></a></li>
+          <li class="active"><a href="http://localhost/ecommerce/admin/orders"><i class="fa fa-shopping-cart"></i> <span>Pedidos</span></a></li>
+          
         </ul>
         <!-- /.sidebar-menu -->
       </section>

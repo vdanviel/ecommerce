@@ -84,7 +84,7 @@
                                                     
 													<tr class="cart_item">
 														<td class="product-name">
-															<?php if(count($productstotal_qnt) > 1){echo $productstotal_qnt[0]['desproduct'].", ".$productstotal_qnt[1]['desproduct']." [...]";}else{echo $productstotal_qnt[0]['desproduct'];}?> <strong class="product-quantity">x <?=intval(count($productstotal_qnt))?></strong> 
+															<?php if(isset($productstotal_qnt)){if(count($productstotal_qnt) > 1){echo $productstotal_qnt[0]['desproduct'].", ".$productstotal_qnt[1]['desproduct']." [...]";}else{echo $productstotal_qnt[0]['desproduct'];}?> <strong class="product-quantity">x <?=intval(count($productstotal_qnt));}else{echo "N/A";}?></strong> 
 														</td>
 														<td class="product-total">
 															<span class="amount"><?=$visual->formatprice($cart->getvlsubtotal())?></span>

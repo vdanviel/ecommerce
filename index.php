@@ -451,7 +451,11 @@ $app->get('/checkout', function(){
 		require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
 	}else {
 
-		$address_data = $address->getcep($_GET['zipcode']);
+		$cart->getcalculatetotal();
+
+		$cart->savecart();
+		
+		$productstotal_qnt = $cart->listcartproducts();
 
 		$addresserror = Address::geterror();
 		require_once("vendor/PERSONAL/template/client-site/header-footer/header.php");
@@ -613,6 +617,8 @@ $app->get('/pagamento', function () {
 	require_once("vendor/PERSONAL/template/client-site/pagamento.php");
 	require_once("vendor/PERSONAL/template/client-site/header-footer/footer.php");
 });
+
+###################################################################################################################
 
 #ADMIN ROTES
 $app->get('/admin', function () {
@@ -1023,6 +1029,62 @@ $app->get('/admin/products/:id/delete', function($id){
 		exit;
 	}
 
+});
+
+#PEDIDOS
+
+$app->get('/admin/orders', function(){
+
+	$orders_data = (new Order)->listorders();
+
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+    require_once("vendor/PERSONAL/template/adm-site/orders.php");
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->get('/admin/orders/:idorder/details', function($idorder){
+
+	$visual = new Visual;
+	$order_data = (new Order)->findoneorder($idorder);
+
+	$order_cart = (new Cart)->listcartproductsbyid($order_data[0]['idcart']);
+
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+    require_once("vendor/PERSONAL/template/adm-site/order.php");
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->get('/admin/orders/:idorder/edit', function($idorder){
+
+	$order_obj = new Order;
+	$order_data = $order_obj->findoneorder($idorder);
+
+	$order_status = $order_obj->liststatusorder();
+
+	$statussuccess = Order::statusgetsuccess();
+	$statuserror = Order::statusgeterror();
+
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+    require_once("vendor/PERSONAL/template/adm-site/order-status.php");
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
+});
+
+$app->post('/admin/orders/:idorder/edit', function($idorder){
+
+	try {
+		(new Order)->updateorder($_POST['idstatus'],$idorder);
+		Order::statussetsuccess('O status do pedido foi alterado com sucesso!');
+		header('location: http://localhost/ecommerce/admin/orders/'.$idorder.'/edit');
+		exit;
+	} catch (\Throwable $th) {
+		Order::statusseterror('Não foi posssível alterar o status do pedido. [ERROR]: '.$th->getMessage().'');
+		header('location: http://localhost/ecommerce/admin/orders/'.$idorder.'/edit');
+		exit;
+	}
+
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/header.php");
+    require_once("vendor/PERSONAL/template/adm-site/order-status.php");
+    require_once("vendor/PERSONAL/template/adm-site/header-footer/footer.php");
 });
 
 $app->run();
